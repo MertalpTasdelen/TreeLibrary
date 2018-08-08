@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB6BCF4F211B32DB00F5667D /* MainPageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6BCF4E211B32DB00F5667D /* MainPageViewControllerDelegate.swift */; };
 		BB708F4F211338E3004A79F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB708F4E211338E3004A79F6 /* AppDelegate.swift */; };
 		BB708F51211338E3004A79F6 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB708F50211338E3004A79F6 /* MainPageViewController.swift */; };
 		BB708F54211338E3004A79F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB708F52211338E3004A79F6 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB6BCF4E211B32DB00F5667D /* MainPageViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewControllerDelegate.swift; sourceTree = "<group>"; };
 		BB708F4B211338E3004A79F6 /* TreeLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TreeLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB708F4E211338E3004A79F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB708F50211338E3004A79F6 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			children = (
 				BB708F4E211338E3004A79F6 /* AppDelegate.swift */,
 				BB708F50211338E3004A79F6 /* MainPageViewController.swift */,
+				BB6BCF4E211B32DB00F5667D /* MainPageViewControllerDelegate.swift */,
 				BBE060AF2119C25300A52347 /* CameraViewController.swift */,
 			);
 			path = Controller;
@@ -165,6 +168,7 @@
 				BB708F51211338E3004A79F6 /* MainPageViewController.swift in Sources */,
 				BB708F4F211338E3004A79F6 /* AppDelegate.swift in Sources */,
 				BBE060B02119C25300A52347 /* CameraViewController.swift in Sources */,
+				BB6BCF4F211B32DB00F5667D /* MainPageViewControllerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

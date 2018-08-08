@@ -62,12 +62,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bj3-Pn-leH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="920.625" y="-575.70422535211264"/>
+            <point key="canvasLocation" x="921" y="-694"/>
         </scene>
         <!--Main Page-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="Main Page" customClass="MainPageViewController" customModule="TreeLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainPageViewController" id="BYZ-38-t0r" userLabel="Main Page" customClass="MainPageViewController" customModule="TreeLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -98,6 +98,7 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.9212072491645813" green="0.84832113981246948" blue="0.62377804517745972" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="QVP-2d-Jfo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-180" id="FTX-Pi-o6h"/>
                             <constraint firstAttribute="bottom" secondItem="QVP-2d-Jfo" secondAttribute="bottom" id="eyL-G7-DsW"/>
@@ -119,7 +120,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="920.625" y="115.14084507042254"/>
+            <point key="canvasLocation" x="921" y="116"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hB9-WW-2wm">
@@ -134,7 +135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WVI-82-GV0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1850" y="116"/>
+            <point key="canvasLocation" x="1871" y="116"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="S1R-Do-H2S">

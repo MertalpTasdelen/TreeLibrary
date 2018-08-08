@@ -14,24 +14,18 @@ import AVFoundation
 class MainPageViewController: UIViewController {
     
     enum SlideOutState {
-        case rightPanelCollapsed
-        case rightPanelExpanded
+        case rightScreenCollapsed
+        case rightScreenOpened
     }
     
+    var delegate: MainPageViewControllerDelegate?
     var mainViewController: MainPageViewController!
     var cameraViewController: CameraViewController!
-    var currentState: SlideOutState = .rightPanelCollapsed
+    var currentState: SlideOutState = .rightScreenCollapsed
+    var centerNavigationViewController: UINavigationController!
+    let centerPanelExpandedOffset: CGFloat = 0
     
     var sideBarState = false
-    var captureSession = AVCaptureSession()
-    var backCamera: AVCaptureDevice?
-    var frontCamera: AVCaptureDevice?
-    var currentCamera: AVCaptureDevice?
-    
-
-    var photoOutput: AVCapturePhotoOutput?
-    
-    var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
     
     @IBOutlet weak var sideBarLeadingEdge: NSLayoutConstraint!
     
@@ -39,6 +33,9 @@ class MainPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mainViewController = UIStoryboard.centerViewController()
+        mainViewController.delegate = self
         
         let pan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handlePan(sender: )))
         pan.edges = .right
@@ -50,12 +47,11 @@ class MainPageViewController: UIViewController {
         let rightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(sender:)))
         rightGesture.direction = .left
         view.addGestureRecognizer(rightGesture)
-
-//        setupCaptureSession()
-//        setupDevice()
-//        setupInputOutput()
-//        setupPreviewLayer()
-//        startRunningCaptureSession()
+        
+        centerNavigationViewController = UINavigationController(rootViewController: mainViewController)
+        
+        addChildViewController(centerNavigationViewController)
+        centerNavigationViewController.didMove(toParentViewController: self)
 
     }
     
@@ -86,64 +82,6 @@ class MainPageViewController: UIViewController {
         sideBarState = !sideBarState
         
     }
-    
-
-    
-    func setupCaptureSession(){
-        //seting the photo quality
-        captureSession.sessionPreset = AVCaptureSession.Preset.photo
-    }
-    
-    func setupDevice(){
-        //setup the device camera for our capture
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
-        
-        let devices = deviceDiscoverySession.devices
-        
-        for device in devices {
-            if device.position == AVCaptureDevice.Position.back {
-                backCamera = device
-            }else if device.position == AVCaptureDevice.Position.front {
-                frontCamera = device
-            }
-        }
-        
-        currentCamera = backCamera
-    }
-    
-    func setupInputOutput(){
-        
-        do{
-            
-            let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
-            captureSession.addInput(captureDeviceInput)
-            photoOutput = AVCapturePhotoOutput()
-            photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
-            captureSession.addOutput(photoOutput!)
-
-        } catch {
-            print(error)
-        }
-        
-    }
-    
-    func setupPreviewLayer(){
-        
-        cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-        cameraPreviewLayer?.frame = self.view.frame
-        self.view.layer.insertSublayer(cameraPreviewLayer!, at: 0)
-    }
-    
-    func startRunningCaptureSession(){
-        
-        captureSession.startRunning()
-        
-    }
-    
-
-    
     
     //END OF CLASS
 }
@@ -178,17 +116,103 @@ extension MainPageViewController: UIGestureRecognizerDelegate {
     
     @objc func handlePan(sender: UIPanGestureRecognizer){
         
-        let gestureIsDraggingFromLeftToRight = (sender.velocity(in: view).x > 0)
+        let gestureIsDraggingRightToLeft = (sender.velocity(in: view).x > 0)
         
-        //        switch sender.state {
-        //        case .began:
-        //            <#code#>
-        //        default:
-        //            <#code#>
-        //        }
+     
+        switch sender.state {
+            
+        case .began:
+            if currentState == .rightScreenCollapsed {
+                
+                if gestureIsDraggingRightToLeft {
+                    addCameraScreenViewController()
+                }
+            }
+            
+        case .changed:
+            if let rview = sender.view {
+                rview.center.x = rview.center.x + sender.translation(in: view).x
+                sender.setTranslation(CGPoint.zero, in: view)
+            }
+            
+        case .ended:
+            if let _ = cameraViewController,
+                let rview = sender.view {
+                // animate the side panel open or closed based on whether the view
+                // has moved more or less than halfway
+                let hasMovedGreaterThanHalfway = rview.center.x > view.bounds.size.width
+                animateCameraScreen(shouldOpened: hasMovedGreaterThanHalfway)
+            }
+            
+        default:
+            break
+        }
         
     }
 }
+
+//MARK - extension for the Opening camera screen
+extension MainPageViewController: MainPageViewControllerDelegate{
+    func openCameraScreen() {
+        
+        let notAlreadyOpened = (currentState != .rightScreenOpened )
+        
+        if notAlreadyOpened {
+            
+            addCameraScreenViewController()
+            
+        }
+        
+        animateCameraScreen(shouldOpened: notAlreadyOpened)
+    }
+    
+    func addCameraScreenViewController(){
+        
+        guard cameraViewController == nil else {return}
+        
+        if let vc = UIStoryboard.cameraViewController(){
+//            vc.startRunningCaptureSession()
+            addChildSidePanelController(vc)
+            cameraViewController = vc
+        }
+    }
+    
+    func addChildSidePanelController(_ sidePanelController: CameraViewController){
+//        view.insertSubview(sidePanel.view, at: 0)
+        view.addSubview(sidePanelController.view)
+        addChildSidePanelController(sidePanelController)
+        sidePanelController.didMove(toParentViewController: self)
+        
+    }
+    
+    
+    func animateCameraScreen(shouldOpened: Bool){
+        
+        if shouldOpened {
+            currentState = .rightScreenOpened
+            animateCenterPanelXPosition(targetPosition: centerNavigationViewController.view.frame.width - centerPanelExpandedOffset)
+        }
+    }
+    
+    func animateCenterPanelXPosition(targetPosition: CGFloat, completion: ((Bool) -> Void)? = nil) {
+        
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0,
+                       options: .curveEaseInOut, animations: {
+                        self.centerNavigationViewController.view.frame.origin.x = targetPosition
+        }, completion: completion)
+    }
+}
+
+
+
+
+
+
+
+
 
 private extension UIStoryboard {
     
@@ -196,6 +220,11 @@ private extension UIStoryboard {
     
     static func cameraViewController() -> CameraViewController? {
         return mainStoryboard().instantiateViewController(withIdentifier: "CameraViewController") as? CameraViewController
+    }
+    
+    static func centerViewController() -> MainPageViewController? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "MainPageViewController") as? MainPageViewController
+        
     }
 }
 
