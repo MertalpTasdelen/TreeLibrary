@@ -39,7 +39,6 @@ class BookViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print(realForest)
         //table view delegats and datasource declaration
         self.treeTableView.delegate = self
         self.treeTableView.dataSource = self
@@ -89,21 +88,27 @@ class BookViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if isFiltering(){
-            //
-            selectedTreeForNextCV = realForest[indexPath.row]
-        }else {
-            selectedTreeForNextCV = realForest[indexPath.row]
-        }
-        
+
         treeTableView.deselectRow(at: indexPath, animated: false)
 
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let detailVC = segue.destination as! SelectedTreeViewController
-        detailVC.selectedTree = selectedTreeForNextCV
+        if segue.identifier == "selectedTreeSegue" {
+            if let indexPath = treeTableView.indexPathForSelectedRow{
+                let tree: TreeModel
+                if isFiltering(){
+                    tree = filteredForest[indexPath.row]
+                }else {
+                    tree = realForest[indexPath.row]
+                }
+                
+                let nextVC = segue.destination as! SelectedTreeViewController
+                nextVC.selectedTree = tree
+                
+            }
+        }
+
     }
     
     func isFiltering() -> Bool {
@@ -118,17 +123,53 @@ class BookViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "Hepsi"){
-        let doesCategoryMatch = (scope == "Hepsi") || (scope == "İ.Yaprak") || (scope == "G.Yaprak") || (scope == "A.Tohum" || (scope == "K.Tohumz"))
-        //doescategorymach seçilen scope a eşitlemen gerek ardından seçilen scope a göre return statemente düzelteceksin seçilen index path deki ağacın PK sı ile realForesttan ağacı bul ve diğer viwecontrollera gönder!
+        let doesCategoryMatch = (scope == "Hepsi") || (scope == "İ.Yaprak") || (scope == "G.Yaprak") || (scope == "A.Tohum" || (scope == "K.Tohum"))
+
+        // filitreleme ve arama işlemleri şu an düzgün çalışıyor ama iyileştirme yapılmalı !! En son tekrar bak
         filteredForest = realForest.filter({ (tree: TreeModel) -> Bool in
-            //filitreleme işlemi
-            if searchBarIsEmpty() {
-                return doesCategoryMatch
-            }else {
-                return doesCategoryMatch &&
-                tree.turkish_name.lowercased().contains(searchText.lowercased())
+            if scope == "İ.Yaprak"{
+                if searchBarIsEmpty(){
+                    return doesCategoryMatch &&
+                        tree.leaf_type.contains("1")
+                }else {
+                    return tree.turkish_name.lowercased().contains(searchText.lowercased()) && tree.leaf_type.contains("1")
+                }
+                
             }
             
+            if scope == "G.Yaprak" {
+                if searchBarIsEmpty(){
+                    return doesCategoryMatch &&
+                        tree.leaf_type.contains("0")
+                }else {
+                    return tree.turkish_name.lowercased().contains(searchText.lowercased()) && tree.leaf_type.contains("0")
+                }
+
+            }
+            
+            if scope == "A.Tohum" {
+                if searchBarIsEmpty() {
+                    return doesCategoryMatch &&
+                        tree.seed_type.contains("1")
+                }else {
+                    return tree.turkish_name.lowercased().contains(searchText.lowercased()) && tree.seed_type.contains("1")
+                }
+                
+            }
+            
+            if scope == "K.Tohum" {
+                if searchBarIsEmpty() {
+                    return doesCategoryMatch && tree.seed_type.contains("0")
+                }else {
+                    return tree.turkish_name.lowercased().contains(searchText.lowercased()) && tree.seed_type.contains("0")
+                }
+
+            }
+            
+            else {
+                return doesCategoryMatch &&
+                    tree.turkish_name.lowercased().contains(searchText.lowercased())
+            }
         })
         
         treeTableView.reloadData()

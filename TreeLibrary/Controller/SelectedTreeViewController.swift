@@ -13,7 +13,8 @@ import UIKit
 class SelectedTreeViewController: UIViewController {
    
     @IBOutlet weak var scrollView: UIScrollView!
-    
+    @IBOutlet weak var shareBarButton: UIBarButtonItem! // wpden gönderme mail atma vs olacak airdrop da koy!!!
+    @IBOutlet weak var navigationTitleItem: UINavigationItem!
     var selectedTree: TreeModel = TreeModel()
     
     
@@ -21,11 +22,8 @@ class SelectedTreeViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
         
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 20))
-        label.center = self.view.center
-        label.textAlignment = .center
-        label.text = selectedTree.turkish_name
-        self.view.addSubview(label)
+        navigationTitleItem.title = selectedTree.turkish_name
+        
 //        print("Selected Tree is: \(selectedTree.turkish_name)")
     }
 }
