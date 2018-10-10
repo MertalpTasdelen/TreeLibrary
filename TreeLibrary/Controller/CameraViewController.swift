@@ -28,11 +28,11 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        setupCaptureSession()
-        setupDevice()
-        setupInputOutput()
-        setupPreviewLayer()
-        startRunningCaptureSession()
+//        setupCaptureSession()
+//        setupDevice()
+//        setupInputOutput()
+//        setupPreviewLayer()
+//        startRunningCaptureSession()
 
         // Do any additional setup after loading the view.
     }

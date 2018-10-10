@@ -7,225 +7,113 @@
 //
 
 import UIKit
-import CoreML
-import Vision
-import AVFoundation
 
-class MainPageViewController: UIViewController {
+class MainPageViewController: UIViewController, UISearchBarDelegate, TreeModelProtocol {
     
-    enum SlideOutState {
-        case rightScreenCollapsed
-        case rightScreenOpened
+    var forest: NSArray = NSArray()
+    var arrayOfForest = [TreeModel]()
+    var darkMode = false
+    var searchController: UISearchController!
+    @IBOutlet weak var backgroundImage: UIImageView!
+    
+    @IBOutlet weak var searchContainerBottomEdge: NSLayoutConstraint!
+    @IBOutlet weak var searchContainerView: UIView!
+    var zeroHeightConstraint: NSLayoutConstraint!
+
+    
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return darkMode ? .default : .lightContent
     }
     
-    var delegate: MainPageViewControllerDelegate?
-    var mainViewController: MainPageViewController!
-    var cameraViewController: CameraViewController!
-    var currentState: SlideOutState = .rightScreenCollapsed
-    var centerNavigationViewController: UINavigationController!
-    let centerPanelExpandedOffset: CGFloat = 0
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+        return .portrait
+    }
     
-    var sideBarState = false
+    override var shouldAutorotate: Bool{
+        return true
+    }
     
-    @IBOutlet weak var sideBarLeadingEdge: NSLayoutConstraint!
     
-    @IBOutlet weak var sideMenuBar: UIView!
+    func itemsDownloaded(items: NSArray) {
+        forest = items
+        
+        for item in 0 ..< forest.count {
+            arrayOfForest.append(forest[item] as! TreeModel)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let orientation = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(orientation, forKey: "orientation")
         
-        mainViewController = UIStoryboard.centerViewController()
-        mainViewController.delegate = self
+        let treeModel = TreeModel()
+        treeModel.delegate = self
+        treeModel.downloadItems()
         
-        let pan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handlePan(sender: )))
-        pan.edges = .right
-        view.addGestureRecognizer(pan)
+        let number = Int.random(in: 0 ..< 5)
+        let images:[UIImage] = [#imageLiteral(resourceName: "forest1"),#imageLiteral(resourceName: "forest2"),#imageLiteral(resourceName: "forest3"),#imageLiteral(resourceName: "forest4"),#imageLiteral(resourceName: "forest5")]
+        backgroundImage.image = images[number]
+        backgroundImage.alpha = CGFloat(0.6)
         
-        let leftGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(sender:)))
-        view.addGestureRecognizer(leftGesture)
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(openSearchBar))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
+
         
-        let rightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(sender:)))
-        rightGesture.direction = .left
-        view.addGestureRecognizer(rightGesture)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "bookViewSegue"{
+            let rootNavigationViewController = segue.destination as! UINavigationController
+            let destVC = rootNavigationViewController.topViewController as! BookViewController
+            destVC.feedTrees = forest
+            destVC.realForest += arrayOfForest
+        }
+
+    }
+
+    @objc func openSearchBar(){
+
+            let searchResultsController = storyboard!.instantiateViewController(withIdentifier: "MainPageViewController") as! MainPageViewController
+            
+            // Create the search controller and make it perform the results updating.
+            searchController = UISearchController(searchResultsController: searchResultsController)
+            searchController.searchResultsUpdater = searchResultsController as? UISearchResultsUpdating
+            searchController.hidesNavigationBarDuringPresentation = false
+            
+            // Present the view controller.
+            present(searchController, animated: true, completion: nil)
         
-        centerNavigationViewController = UINavigationController(rootViewController: mainViewController)
-        
-        addChildViewController(centerNavigationViewController)
-        centerNavigationViewController.didMove(toParentViewController: self)
 
     }
     
-    @IBAction func openSideBar(_ sender: UIBarButtonItem) {
-        
-        if (sideBarState == false) {
-            
-            sideBarLeadingEdge.constant = 0
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-            sideMenuBar.layer.shadowOpacity = 0.85
-            sideMenuBar.layer.shadowRadius = 10
-            
-            
-        } else {
-            
-            sideBarLeadingEdge.constant = -180
-            sideMenuBar.layer.shadowOpacity = 0
-            sideMenuBar.layer.shadowRadius = 0
-            UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-            }
-            
-            
-        }
-        
-        sideBarState = !sideBarState
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //harf girildiğinde arama işlemi yapılan kısım
+    }
+    
+    
+    @IBAction func openCameraScreen(_ sender: UIButton) {
+        performSegue(withIdentifier: "cameraSegue", sender: self)
+    }
+    
+    @IBAction func openMapView(_ sender: UIButton) {
+        performSegue(withIdentifier: "mapViewSegue", sender: self)
+    }
+    
+    @IBAction func openBook(_ sender: UIButton) {
+        performSegue(withIdentifier: "bookViewSegue", sender: self)
+    }
+    
+    @IBAction func reportError(_ sender: UIButton) {
+        //report area seçenek kutusundan hata işaretlenecek yazılacak gönderilecek.
         
     }
     
+    
+
+
     //END OF CLASS
-}
-
-
-//MARK - Extension for gestures
-extension MainPageViewController: UIGestureRecognizerDelegate {
-    
-    @objc func handleSwipe(sender: UISwipeGestureRecognizer) {
-        
-        if (sideBarState == false && sender.direction == .right) {
-            
-            sideBarLeadingEdge.constant = 0
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-            sideMenuBar.layer.shadowOpacity = 0.85
-            sideMenuBar.layer.shadowRadius = 10
-        }else if (sideBarState == true && sender.direction == .left) {
-            
-            sideBarLeadingEdge.constant = -180
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-            sideMenuBar.layer.shadowOpacity = 0
-            sideMenuBar.layer.shadowRadius = 0
-        }
-        
-        sideBarState = !sideBarState
-    }
-    
-    
-    @objc func handlePan(sender: UIPanGestureRecognizer){
-        
-        let gestureIsDraggingRightToLeft = (sender.velocity(in: view).x > 0)
-        
-     
-        switch sender.state {
-            
-        case .began:
-            if currentState == .rightScreenCollapsed {
-                
-                if gestureIsDraggingRightToLeft {
-                    addCameraScreenViewController()
-                }
-            }
-            
-        case .changed:
-            if let rview = sender.view {
-                rview.center.x = rview.center.x + sender.translation(in: view).x
-                sender.setTranslation(CGPoint.zero, in: view)
-            }
-            
-        case .ended:
-            if let _ = cameraViewController,
-                let rview = sender.view {
-                // animate the side panel open or closed based on whether the view
-                // has moved more or less than halfway
-                let hasMovedGreaterThanHalfway = rview.center.x > view.bounds.size.width
-                animateCameraScreen(shouldOpened: hasMovedGreaterThanHalfway)
-            }
-            
-        default:
-            break
-        }
-        
-    }
-}
-
-//MARK - extension for the Opening camera screen
-extension MainPageViewController: MainPageViewControllerDelegate{
-    func openCameraScreen() {
-        
-        let notAlreadyOpened = (currentState != .rightScreenOpened )
-        
-        if notAlreadyOpened {
-            
-            addCameraScreenViewController()
-            
-        }
-        
-        animateCameraScreen(shouldOpened: notAlreadyOpened)
-    }
-    
-    func addCameraScreenViewController(){
-        
-        guard cameraViewController == nil else {return}
-        
-        if let vc = UIStoryboard.cameraViewController(){
-//            vc.startRunningCaptureSession()
-            addChildSidePanelController(vc)
-            cameraViewController = vc
-        }
-    }
-    
-    func addChildSidePanelController(_ sidePanelController: CameraViewController){
-//        view.insertSubview(sidePanel.view, at: 0)
-        view.addSubview(sidePanelController.view)
-        addChildSidePanelController(sidePanelController)
-        sidePanelController.didMove(toParentViewController: self)
-        
-    }
-    
-    
-    func animateCameraScreen(shouldOpened: Bool){
-        
-        if shouldOpened {
-            currentState = .rightScreenOpened
-            animateCenterPanelXPosition(targetPosition: centerNavigationViewController.view.frame.width - centerPanelExpandedOffset)
-        }
-    }
-    
-    func animateCenterPanelXPosition(targetPosition: CGFloat, completion: ((Bool) -> Void)? = nil) {
-        
-        UIView.animate(withDuration: 0.5,
-                       delay: 0,
-                       usingSpringWithDamping: 0.8,
-                       initialSpringVelocity: 0,
-                       options: .curveEaseInOut, animations: {
-                        self.centerNavigationViewController.view.frame.origin.x = targetPosition
-        }, completion: completion)
-    }
-}
-
-
-
-
-
-
-
-
-
-private extension UIStoryboard {
-    
-     static func mainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: Bundle.main) }
-    
-    static func cameraViewController() -> CameraViewController? {
-        return mainStoryboard().instantiateViewController(withIdentifier: "CameraViewController") as? CameraViewController
-    }
-    
-    static func centerViewController() -> MainPageViewController? {
-        return mainStoryboard().instantiateViewController(withIdentifier: "MainPageViewController") as? MainPageViewController
-        
-    }
 }
 
 
