@@ -44,6 +44,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate, TreeModelPr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let orientation = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(orientation, forKey: "orientation")
         

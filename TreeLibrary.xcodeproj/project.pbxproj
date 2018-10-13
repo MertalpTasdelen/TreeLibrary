@@ -15,6 +15,8 @@
 		BB708F59211338E4004A79F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB708F57211338E4004A79F6 /* LaunchScreen.storyboard */; };
 		BB948EDA2143BD15007E9568 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB948ED92143BD15007E9568 /* MapViewController.swift */; };
 		BB948EDD2143BD7E007E9568 /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB948EDC2143BD7E007E9568 /* BookViewController.swift */; };
+		BB9F0E2021714E45000415B1 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9F0E1F21714E45000415B1 /* Slider.swift */; };
+		BB9F0E2221714E7D000415B1 /* Slider.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB9F0E2121714E7D000415B1 /* Slider.xib */; };
 		BBE060B02119C25300A52347 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE060AF2119C25300A52347 /* CameraViewController.swift */; };
 		BBF6062E2142CC9C00C940F7 /* TreeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF6062D2142CC9C00C940F7 /* TreeModel.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +32,8 @@
 		BB708F5A211338E4004A79F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB948ED92143BD15007E9568 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		BB948EDC2143BD7E007E9568 /* BookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
+		BB9F0E1F21714E45000415B1 /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
+		BB9F0E2121714E7D000415B1 /* Slider.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Slider.xib; sourceTree = "<group>"; };
 		BBE060AF2119C25300A52347 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		BBF6062D2142CC9C00C940F7 /* TreeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +88,7 @@
 		BB96EDC82118728100C10606 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BB9F0E2121714E7D000415B1 /* Slider.xib */,
 				BB708F52211338E3004A79F6 /* Main.storyboard */,
 				BB708F57211338E4004A79F6 /* LaunchScreen.storyboard */,
 			);
@@ -99,6 +104,7 @@
 				BB948ED92143BD15007E9568 /* MapViewController.swift */,
 				BB948EDC2143BD7E007E9568 /* BookViewController.swift */,
 				BB5B6FF82166B1D600C3B1AD /* SelectedTreeViewController.swift */,
+				BB9F0E1F21714E45000415B1 /* Slider.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -164,6 +170,7 @@
 			files = (
 				BB708F59211338E4004A79F6 /* LaunchScreen.storyboard in Resources */,
 				BB708F56211338E4004A79F6 /* Assets.xcassets in Resources */,
+				BB9F0E2221714E7D000415B1 /* Slider.xib in Resources */,
 				BB708F54211338E3004A79F6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,6 +189,7 @@
 				BB948EDA2143BD15007E9568 /* MapViewController.swift in Sources */,
 				BBE060B02119C25300A52347 /* CameraViewController.swift in Sources */,
 				BB5B6FF92166B1D600C3B1AD /* SelectedTreeViewController.swift in Sources */,
+				BB9F0E2021714E45000415B1 /* Slider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,7 +344,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.12ceyrek.TreeLibrary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -355,7 +363,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.12ceyrek.TreeLibrary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
