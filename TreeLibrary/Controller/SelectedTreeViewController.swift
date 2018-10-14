@@ -12,15 +12,27 @@ import UIKit
 
 class SelectedTreeViewController: UIViewController {
    
-
-    var treeSpecifications:[Slider] = []
-    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var labelLatinName: UILabel!
+    @IBOutlet weak var labelSeedType: UILabel!
+    @IBOutlet weak var labelLeafType: UILabel!
+    @IBOutlet weak var imageOfSelectedTreeBody: UIImageView!
+    @IBOutlet weak var bothanicalPropertieHeader: UILabel!
+    @IBOutlet weak var textViewBothanicalProperty: UITextView!
+    @IBOutlet weak var imageOfSelectedTreeLeaf: UIImageView!
+    @IBOutlet weak var spreadingAreaHeader: UILabel!
+    @IBOutlet weak var textViewSpreadingArea: UITextView!
+    
+    
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var shareBarButton: UIBarButtonItem! // wpden gönderme mail atma vs olacak airdrop da koy!!!
     @IBOutlet weak var navigationTitleItem: UINavigationItem!
     var selectedTree: TreeModel = TreeModel()
     
     
+//    override func didReceiveMemoryWarning() {
+//        <#code#>
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +45,8 @@ class SelectedTreeViewController: UIViewController {
         URLCache.shared = urlCache
         
         setupTopView()
-        treeSpecifications = createSlideShow()
-        setupSlideScrollView(slides: treeSpecifications)
-        
-        pageControl.numberOfPages = treeSpecifications.count
-        pageControl.currentPage = 0
-        view.bringSubviewToFront(pageControl)
-        
-        
-//        print("Selected Tree is: \(selectedTree.turkish_name)")
+        setupContentOfPage()
+
     }
 
     func setupTopView(){
@@ -49,53 +54,60 @@ class SelectedTreeViewController: UIViewController {
         
     }
     
-    func createSlideShow() -> [Slider] {
-        let urlPath = "http://www.12ceyrek.com/mertalp/tree_images/Araucaria-Araucana-(Molina)-K-Koch-tree.jpg"
-        let url: URL = URL(string: urlPath)!
-        let defaultSesion = URLSession(configuration: URLSessionConfiguration.default)
-
-        let pageOne = Bundle.main.loadNibNamed("Slider", owner: self, options: nil)?.first as! Slider
-        pageOne.latinTreeName.text = selectedTree.latin_name
+    func setupContentOfPage() {
+        
+        labelLatinName.text = selectedTree.latin_name
         if selectedTree.seed_type == "1" {
-            pageOne.treeSeedType.text = "Açık Tohum"
-        }else {
-            pageOne.treeSeedType.text = "Kapalı Tohum"
+            labelSeedType.text = "Açık Tohum"
+        } else {
+            labelSeedType.text = "Kapalı Tohum"
         }
         
         if selectedTree.leaf_type == "1" {
-            pageOne.treeLeafType.text = "İğne Yaprak"
-        }else {
-            pageOne.treeLeafType.text = "Geniş Yaprak"
+            labelLeafType.text = "İğne Yaprak"
+        } else {
+            labelLeafType.text = "Kapalı Yaprak"
         }
         
-        let treeImage = defaultSesion.dataTask(with: url) { (data, response, error) in
+        let urlPath1 = "http://www.12ceyrek.com/mertalp/tree_images/Araucaria-Araucana-(Molina)-K-Koch-tree.jpg"
+        let urlPath2 = "http://www.12ceyrek.com/mertalp/tree_images/Araucaria-Araucana-(Molina)-K-Koch-leaf1.jpg"
+        let treeUrl: URL = URL(string: urlPath1)!
+        let leafUrl: URL = URL(string: urlPath2)!
+        
+        let defaultSession = URLSession(configuration: URLSessionConfiguration.default)
+        
+        let treeImage = defaultSession.dataTask(with: treeUrl) { (data, respornse, error) in
             if error != nil {
                 print(error!)
             }else {
-                let image = UIImage(data: data!)
+                let treeImage = UIImage(data: data!)
                 
                 DispatchQueue.main.async {
-                    pageOne.imageView.image = image
-                    //Buraya loader koyabilirsin !! resim inene kadar dönen bir loading
+                    self.imageOfSelectedTreeBody.image = treeImage
                 }
             }
         }
-            
+        
         treeImage.resume()
         
-        pageOne.bothanicalPropertieExplanation.text = selectedTree.botanical_prop
-        pageOne.bothanicalPropHeader.text = "Botanik Özellikleri"
-        return [pageOne]
-    }
-    
-    func setupSlideScrollView(slides: [Slider]) {
-        scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(slides.count), height: view.frame.height)
-        scrollView.isPagingEnabled = true
-        
-        for i in 0 ..< slides.count {
-            slides[i].frame = CGRect(x: view.frame.width * CGFloat(i), y: 0, width: view.frame.width, height: view.frame.height)
-            scrollView.addSubview(slides[i])
+        let leafImage = defaultSession.dataTask(with: leafUrl) { (data, response, error) in
+            if error != nil {
+                print(error!)
+            }else {
+                let leafImage = UIImage(data: data!)
+                
+                DispatchQueue.main.async {
+                    self.imageOfSelectedTreeLeaf.image = leafImage
+                }
+            }
         }
+        
+        leafImage.resume()
+        
+        bothanicalPropertieHeader.text = "Botanik Özellikleri"
+        textViewBothanicalProperty.text = selectedTree.botanical_prop
+        spreadingAreaHeader.text = "Yayılış Alanları"
+        textViewSpreadingArea.text = selectedTree.spreading_area
+   
     }
 }
