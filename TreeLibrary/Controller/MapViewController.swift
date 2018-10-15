@@ -15,7 +15,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManager = CLLocationManager()
-    
+    let regionInMeters: Double = 10000
+
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
     }
@@ -37,45 +38,56 @@ class MapViewController: UIViewController {
         checkLocationServices()
     }
     
-    func setupLocationManager(){
+    func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
-    func centerViewOnUserLocation(){
+    func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion.init(center: location, latitudinalMeters:10000, longitudinalMeters: 10000)
+            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
             mapView.setRegion(region, animated: true)
         }
     }
     
-    func checkLocationServices(){
+    func checkLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
             setupLocationManager()
-            checkLocationServices()
-        }else {
-            print("En error")
+            checkLocationAuthorization()
+        } else {
+            // Show alert letting the user know they have to turn this on.
         }
     }
     
     
-    func checkLocationAuthorization(){
+    func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse:
             mapView.showsUserLocation = true
+            centerViewOnUserLocation()
+            locationManager.startUpdatingLocation()
             break
         case .denied:
-            // Show alert Hot to turn on permission
+            // Show alert instructing them how to turn on permissions
             break
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
-            break
         case .restricted:
-            // show alert to turn on
+            // Show an alert letting them know what's up
             break
         case .authorizedAlways:
             break
         }
+    }
+    
+    
+    private func addAnnotations(){
+        let myHome = MKPointAnnotation()
+        
+        myHome.title = "Mertalp's Home"
+        myHome.coordinate = CLLocationCoordinate2D(latitude: 42.037625, longitude: 35.291794)
+        
+        mapView.addAnnotation(myHome)
     }
     
 
@@ -83,12 +95,34 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        ///asdfas
+        guard let location = locations.last else { return }
+        let region = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+        mapView.setRegion(region, animated: true)
+        addAnnotations()
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        //afasdf
+        checkLocationAuthorization()
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView")
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
+        }
+        
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        //perform the segue with the selected tree
+        print("Yeni sayfa açılacak")
     }
 }
 
