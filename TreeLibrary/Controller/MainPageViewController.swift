@@ -8,9 +8,13 @@
 
 import UIKit
 
-class MainPageViewController: UIViewController, UISearchBarDelegate, TreeModelProtocol {
+class MainPageViewController: UIViewController, UISearchBarDelegate {
+
+    
     
     var forest: NSArray = NSArray()
+    var locations: NSArray = NSArray()
+    var treeLocationArray = [TreeAnnotation]()
     var arrayOfForest = [TreeModel]()
     var darkMode = false
     var searchController: UISearchController!
@@ -18,9 +22,8 @@ class MainPageViewController: UIViewController, UISearchBarDelegate, TreeModelPr
     
     @IBOutlet weak var searchContainerBottomEdge: NSLayoutConstraint!
     @IBOutlet weak var searchContainerView: UIView!
-    var zeroHeightConstraint: NSLayoutConstraint!
 
-    
+
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return darkMode ? .default : .lightContent
     }
@@ -33,15 +36,6 @@ class MainPageViewController: UIViewController, UISearchBarDelegate, TreeModelPr
         return true
     }
     
-    
-    func itemsDownloaded(items: NSArray) {
-        forest = items
-        
-        for item in 0 ..< forest.count {
-            arrayOfForest.append(forest[item] as! TreeModel)
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,6 +45,10 @@ class MainPageViewController: UIViewController, UISearchBarDelegate, TreeModelPr
         let treeModel = TreeModel()
         treeModel.delegate = self
         treeModel.downloadItems()
+        
+        let treeAnnotation = TreeAnnotation()
+        treeAnnotation.delegate = self
+        treeAnnotation.downloadLocations()
         
         let number = Int.random(in: 0 ..< 5)
         let images:[UIImage] = [#imageLiteral(resourceName: "forest1"),#imageLiteral(resourceName: "forest2"),#imageLiteral(resourceName: "forest3"),#imageLiteral(resourceName: "forest4"),#imageLiteral(resourceName: "forest5")]
@@ -65,11 +63,17 @@ class MainPageViewController: UIViewController, UISearchBarDelegate, TreeModelPr
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "bookViewSegue"{
+        if segue.identifier == "bookViewSegue" {
             let rootNavigationViewController = segue.destination as! UINavigationController
             let destVC = rootNavigationViewController.topViewController as! BookViewController
-            destVC.feedTrees = forest
+//            destVC.feedTrees = forest
             destVC.realForest += arrayOfForest
+        }
+        
+        if segue.identifier == "mapViewSegue" {
+            let destVC = segue.destination as! MapViewController
+            destVC.treeLocationArray = treeLocationArray
+            
         }
 
     }
@@ -93,13 +97,13 @@ class MainPageViewController: UIViewController, UISearchBarDelegate, TreeModelPr
         //harf girildiğinde arama işlemi yapılan kısım
     }
     
-    
     @IBAction func openCameraScreen(_ sender: UIButton) {
         performSegue(withIdentifier: "cameraSegue", sender: self)
     }
     
     @IBAction func openMapView(_ sender: UIButton) {
         performSegue(withIdentifier: "mapViewSegue", sender: self)
+        
     }
     
     @IBAction func openBook(_ sender: UIButton) {
@@ -110,11 +114,28 @@ class MainPageViewController: UIViewController, UISearchBarDelegate, TreeModelPr
         //report area seçenek kutusundan hata işaretlenecek yazılacak gönderilecek.
         
     }
-    
-    
-
-
     //END OF CLASS
+}
+
+
+extension MainPageViewController: TreeAnnotationProtocol {
+    func locationsDownloaded(item: NSArray) {
+        locations = item
+        
+        for item in 0 ..< locations.count {
+            treeLocationArray.append(locations[item] as! TreeAnnotation)
+        }
+    }
+}
+
+extension MainPageViewController: TreeModelProtocol {
+    func itemsDownloaded(items: NSArray) {
+        forest = items
+        
+        for item in 0 ..< forest.count {
+            arrayOfForest.append(forest[item] as! TreeModel)
+        }
+    }
 }
 
 

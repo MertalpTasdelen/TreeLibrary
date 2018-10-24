@@ -15,6 +15,7 @@
 		BB708F59211338E4004A79F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB708F57211338E4004A79F6 /* LaunchScreen.storyboard */; };
 		BB948EDA2143BD15007E9568 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB948ED92143BD15007E9568 /* MapViewController.swift */; };
 		BB948EDD2143BD7E007E9568 /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB948EDC2143BD7E007E9568 /* BookViewController.swift */; };
+		BBCA14AD218105E200594ABE /* TreeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCA14AC218105E200594ABE /* TreeAnnotation.swift */; };
 		BBE060B02119C25300A52347 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE060AF2119C25300A52347 /* CameraViewController.swift */; };
 		BBF6062E2142CC9C00C940F7 /* TreeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF6062D2142CC9C00C940F7 /* TreeModel.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		BB708F5A211338E4004A79F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB948ED92143BD15007E9568 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		BB948EDC2143BD7E007E9568 /* BookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
+		BBCA14AC218105E200594ABE /* TreeAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeAnnotation.swift; sourceTree = "<group>"; };
 		BBE060AF2119C25300A52347 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		BBF6062D2142CC9C00C940F7 /* TreeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				BBF6062D2142CC9C00C940F7 /* TreeModel.swift */,
+				BBCA14AC218105E200594ABE /* TreeAnnotation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 				BBF6062E2142CC9C00C940F7 /* TreeModel.swift in Sources */,
 				BB708F4F211338E3004A79F6 /* AppDelegate.swift in Sources */,
 				BB948EDD2143BD7E007E9568 /* BookViewController.swift in Sources */,
+				BBCA14AD218105E200594ABE /* TreeAnnotation.swift in Sources */,
 				BB948EDA2143BD15007E9568 /* MapViewController.swift in Sources */,
 				BBE060B02119C25300A52347 /* CameraViewController.swift in Sources */,
 				BB5B6FF92166B1D600C3B1AD /* SelectedTreeViewController.swift in Sources */,

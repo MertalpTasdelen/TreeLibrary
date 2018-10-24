@@ -14,8 +14,13 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    var treeLocationArray = [TreeAnnotation]()
     let locationManager = CLLocationManager()
-    let regionInMeters: Double = 10000
+    let regionInMeters: Double = 150000
+
+    @IBAction func backToMainPage(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
@@ -34,6 +39,9 @@ class MapViewController: UIViewController {
         let orientation = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(orientation, forKey: "orientation")
         setNeedsStatusBarAppearanceUpdate()
+        for item in treeLocationArray {
+            print(item.latin_name)
+        }
         
         checkLocationServices()
     }
@@ -76,6 +84,8 @@ class MapViewController: UIViewController {
             // Show an alert letting them know what's up
             break
         case .authorizedAlways:
+            mapView.showsUserLocation = true
+            centerViewOnUserLocation()
             break
         }
     }
@@ -90,6 +100,14 @@ class MapViewController: UIViewController {
         mapView.addAnnotation(myHome)
     }
     
+    //to set the user location in center of the map
+    private func setCurrentLocation(){
+        guard let location = locationManager.location else { return }
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion.init(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+        mapView.setRegion(region, animated: true)
+    }
+    
 
     
 }
@@ -97,28 +115,17 @@ class MapViewController: UIViewController {
 extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        let region = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-        mapView.setRegion(region, animated: true)
         addAnnotations()
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         checkLocationAuthorization()
     }
+    
 }
 
 extension MapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView")
-        
-        if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
-        }
-        
-        return annotationView
-    }
+
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         //perform the segue with the selected tree

@@ -8,19 +8,14 @@
 
 import UIKit
 
-class BookViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchBarDelegate {
+class BookViewController: UIViewController{
     
-    func updateSearchResults(for searchController: UISearchController) {
-        
-        let searchBar = searchController.searchBar
-        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
-        
-        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
-        
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
-    // Called when the user switched the scope
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
+    
+    override var shouldAutorotate: Bool {
+        return true
     }
     
     //feedTrees comes with preloaded data from MainPageViewController.swift
@@ -39,6 +34,9 @@ class BookViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let orientation = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(orientation, forKey: "orientation")
+        
         //table view delegats and datasource declaration
         self.treeTableView.delegate = self
         self.treeTableView.dataSource = self
@@ -59,39 +57,7 @@ class BookViewController: UIViewController, UITableViewDelegate, UITableViewData
         definesPresentationContext = true
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if isFiltering(){
-            return filteredForest.count
-        }
-        
-        return realForest.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell: UITableViewCell = treeTableView.dequeueReusableCell(withIdentifier: "basicCell")!
-        let item: TreeModel
-        
-        if isFiltering(){
-            item = filteredForest[indexPath.row]
-        }else {
-            item = realForest[indexPath.row]
-        }
-        
-        cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 16.0)
-        cell.textLabel!.text = item.turkish_name
-        cell.detailTextLabel!.text = item.botanical_prop
-        cell.detailTextLabel!.textColor = UIColor.lightGray
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        treeTableView.deselectRow(at: indexPath, animated: false)
-
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "selectedTreeSegue" {
@@ -177,6 +143,62 @@ class BookViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func goBackMainPage(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+
+extension BookViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if isFiltering(){
+            return filteredForest.count
+        }
+        
+        return realForest.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell: UITableViewCell = treeTableView.dequeueReusableCell(withIdentifier: "basicCell")!
+        let item: TreeModel
+        
+        if isFiltering(){
+            item = filteredForest[indexPath.row]
+        }else {
+            item = realForest[indexPath.row]
+        }
+        
+        cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 16.0)
+        cell.textLabel!.text = item.turkish_name
+        cell.detailTextLabel!.text = item.botanical_prop
+        cell.detailTextLabel!.textColor = UIColor.lightGray
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        treeTableView.deselectRow(at: indexPath, animated: false)
+        
+    }
+    
+}
+
+extension BookViewController: UISearchBarDelegate, UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        
+        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
+        
+    }
+    // Called when the user switched the scope
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 }
 
