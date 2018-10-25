@@ -39,9 +39,6 @@ class MapViewController: UIViewController {
         let orientation = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(orientation, forKey: "orientation")
         setNeedsStatusBarAppearanceUpdate()
-        for item in treeLocationArray {
-            print(item.latin_name)
-        }
         
         checkLocationServices()
     }
@@ -92,12 +89,32 @@ class MapViewController: UIViewController {
     
     
     private func addAnnotations(){
-        let myHome = MKPointAnnotation()
+//        let myHome = MKPointAnnotation()
         
-        myHome.title = "Mertalp's Home"
-        myHome.coordinate = CLLocationCoordinate2D(latitude: 42.037625, longitude: 35.291794)
+
         
-        mapView.addAnnotation(myHome)
+        for item in treeLocationArray{
+            let treeAnnotation = MKPointAnnotation()
+
+            let treeLatitude = Double(treeLocationArray[0].latitude)!
+            let treeLongitude = Double(treeLocationArray[0].longitude)!
+            
+            print(treeLatitude)
+            print(treeLongitude)
+//            if let tempLatitude = Double(item.latitude) {  print(tempLatitude)  }
+//            if let tempLongitude = Double(item.longitude) { print(tempLongitude) }
+
+            treeAnnotation.title = item.latin_name
+            treeAnnotation.coordinate = CLLocationCoordinate2D(latitude: 37.379398, longitude: 35.320441)
+
+            mapView.addAnnotation(treeAnnotation)
+        }
+//        print(treeLongitude)
+//        print(treeLatitude)
+//        myHome.title = treeLocationArray[0].latin_name
+//        myHome.coordinate = CLLocationCoordinate2D(latitude: 37.379398, longitude: 35.320441)
+//
+//        mapView.addAnnotation(myHome)
     }
     
     //to set the user location in center of the map
@@ -130,6 +147,12 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         //perform the segue with the selected tree
         print("Yeni sayfa açılacak")
+    }
+}
+
+extension String {
+    func toDouble() -> Double?{
+        return NumberFormatter().number(from: self)?.doubleValue
     }
 }
 

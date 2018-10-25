@@ -29,10 +29,10 @@ class SelectedTreeViewController: UIViewController {
     @IBOutlet weak var navigationTitleItem: UINavigationItem!
     var selectedTree: TreeModel = TreeModel()
     
-    
-//    override func didReceiveMemoryWarning() {
-//        <#code#>
-//    }
+    //if the program download so many data this will clear the cache
+    override func didReceiveMemoryWarning() {
+        URLCache.shared.removeAllCachedResponses()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,10 +69,17 @@ class SelectedTreeViewController: UIViewController {
             labelLeafType.text = "Kapalı Yaprak"
         }
         
-        let urlPath1 = "http://www.12ceyrek.com/mertalp/tree_images/Araucaria-Araucana-(Molina)-K-Koch-tree.jpg"
-        let urlPath2 = "http://www.12ceyrek.com/mertalp/tree_images/Araucaria-Araucana-(Molina)-K-Koch-leaf1.jpg"
-        let treeUrl: URL = URL(string: urlPath1)!
-        let leafUrl: URL = URL(string: urlPath2)!
+        let rootUrl = "http://www.12ceyrek.com/mertalp/tree_images/"
+        let name = selectedTree.latin_name
+        let hostUrl = name.replacingOccurrences(of: " ", with: "-")
+        let leafEndPointUrl = "-leaf.jpg"
+        let treeEndPointUrl = "-tree.jpg"
+        
+        
+        print(rootUrl + hostUrl + treeEndPointUrl)
+        
+        let treeUrl: URL = URL(string: rootUrl + hostUrl + treeEndPointUrl)!
+        let leafUrl: URL = URL(string: rootUrl + hostUrl + leafEndPointUrl)!
         
         let defaultSession = URLSession(configuration: URLSessionConfiguration.default)
         
