@@ -33,14 +33,32 @@ class MapViewController: UIViewController {
     override var shouldAutorotate: Bool {
         return true
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let orientation = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(orientation, forKey: "orientation")
         setNeedsStatusBarAppearanceUpdate()
-        
+        addSelectedAnnotationView()
         checkLocationServices()
+    }
+    
+    func addSelectedAnnotationView(scrollable: Bool? = true) {
+        // 1- Init bottomSheetVC
+        let selectedAnnotationVC = scrollable! ? SelectedAnnotationViewController() : SelectedAnnotationViewController()
+        
+        // 2- Add bottomSHeetVC as a child view
+        self.addChild(selectedAnnotationVC)
+        self.view.addSubview(selectedAnnotationVC.view)
+        selectedAnnotationVC.didMove(toParent: self)
+        
+        // 3- Adjust bottomSheet frame and inital position
+        let height = view.frame.height
+        let width = view.frame.width
+        selectedAnnotationVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height:height)
+        
+        
+        
     }
     
     func setupLocationManager() {
@@ -63,7 +81,7 @@ class MapViewController: UIViewController {
             // Show alert letting the user know they have to turn this on.
         }
     }
-    
+
     
     func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
@@ -89,32 +107,11 @@ class MapViewController: UIViewController {
     
     
     private func addAnnotations(){
-//        let myHome = MKPointAnnotation()
-        
 
-        
-        for item in treeLocationArray{
-            let treeAnnotation = MKPointAnnotation()
-
-            let treeLatitude = Double(treeLocationArray[0].latitude)!
-            let treeLongitude = Double(treeLocationArray[0].longitude)!
-            
-            print(treeLatitude)
-            print(treeLongitude)
-//            if let tempLatitude = Double(item.latitude) {  print(tempLatitude)  }
-//            if let tempLongitude = Double(item.longitude) { print(tempLongitude) }
-
-            treeAnnotation.title = item.latin_name
-            treeAnnotation.coordinate = CLLocationCoordinate2D(latitude: 37.379398, longitude: 35.320441)
-
-            mapView.addAnnotation(treeAnnotation)
+        for location in treeLocationArray {
+            print(location.coordinate)
         }
-//        print(treeLongitude)
-//        print(treeLatitude)
-//        myHome.title = treeLocationArray[0].latin_name
-//        myHome.coordinate = CLLocationCoordinate2D(latitude: 37.379398, longitude: 35.320441)
-//
-//        mapView.addAnnotation(myHome)
+        mapView.addAnnotations(treeLocationArray)
     }
     
     //to set the user location in center of the map
@@ -145,7 +142,7 @@ extension MapViewController: MKMapViewDelegate {
 
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        //perform the segue with the selected tree
+        // tree tıklandığında gerçekleşen metod
         print("Yeni sayfa açılacak")
     }
 }

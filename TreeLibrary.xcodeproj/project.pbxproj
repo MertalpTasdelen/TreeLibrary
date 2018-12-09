@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB38D40D21BC677800A1ED93 /* SelectedAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38D40C21BC677800A1ED93 /* SelectedAnnotationView.swift */; };
 		BB5B6FF92166B1D600C3B1AD /* SelectedTreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B6FF82166B1D600C3B1AD /* SelectedTreeViewController.swift */; };
+		BB60931121BC3BFF0087BD97 /* SelectedAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60931021BC3BFF0087BD97 /* SelectedAnnotationViewController.swift */; };
+		BB60931621BC44CD0087BD97 /* SelectedAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB60931521BC44CD0087BD97 /* SelectedAnnotationView.xib */; };
 		BB708F4F211338E3004A79F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB708F4E211338E3004A79F6 /* AppDelegate.swift */; };
 		BB708F51211338E3004A79F6 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB708F50211338E3004A79F6 /* MainPageViewController.swift */; };
 		BB708F54211338E3004A79F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB708F52211338E3004A79F6 /* Main.storyboard */; };
@@ -21,7 +24,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB38D40C21BC677800A1ED93 /* SelectedAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedAnnotationView.swift; sourceTree = "<group>"; };
 		BB5B6FF82166B1D600C3B1AD /* SelectedTreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTreeViewController.swift; sourceTree = "<group>"; };
+		BB60931021BC3BFF0087BD97 /* SelectedAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedAnnotationViewController.swift; sourceTree = "<group>"; };
+		BB60931521BC44CD0087BD97 /* SelectedAnnotationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SelectedAnnotationView.xib; path = "TreeLibrary/Views/Custom Views/SelectedAnnotationView.xib"; sourceTree = SOURCE_ROOT; };
 		BB708F4B211338E3004A79F6 /* TreeLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TreeLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB708F4E211338E3004A79F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB708F50211338E3004A79F6 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BB60931221BC41740087BD97 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				BB60931521BC44CD0087BD97 /* SelectedAnnotationView.xib */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
 		BB708F42211338E3004A79F6 = {
 			isa = PBXGroup;
 			children = (
@@ -66,34 +80,35 @@
 		BB708F4D211338E3004A79F6 /* TreeLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				BB96EDC92118728500C10606 /* Controller */,
-				BB96EDC82118728100C10606 /* View */,
-				BB96EDC72118727B00C10606 /* Model */,
+				BB96EDC92118728500C10606 /* Controllers */,
+				BB96EDC82118728100C10606 /* Views */,
+				BB96EDC72118727B00C10606 /* Models */,
 				BB708F55211338E4004A79F6 /* Assets.xcassets */,
 				BB708F5A211338E4004A79F6 /* Info.plist */,
 			);
 			path = TreeLibrary;
 			sourceTree = "<group>";
 		};
-		BB96EDC72118727B00C10606 /* Model */ = {
+		BB96EDC72118727B00C10606 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				BBF6062D2142CC9C00C940F7 /* TreeModel.swift */,
 				BBCA14AC218105E200594ABE /* TreeAnnotation.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		BB96EDC82118728100C10606 /* View */ = {
+		BB96EDC82118728100C10606 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BB60931221BC41740087BD97 /* Custom Views */,
 				BB708F52211338E3004A79F6 /* Main.storyboard */,
 				BB708F57211338E4004A79F6 /* LaunchScreen.storyboard */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		BB96EDC92118728500C10606 /* Controller */ = {
+		BB96EDC92118728500C10606 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				BB708F4E211338E3004A79F6 /* AppDelegate.swift */,
@@ -102,8 +117,10 @@
 				BB948ED92143BD15007E9568 /* MapViewController.swift */,
 				BB948EDC2143BD7E007E9568 /* BookViewController.swift */,
 				BB5B6FF82166B1D600C3B1AD /* SelectedTreeViewController.swift */,
+				BB60931021BC3BFF0087BD97 /* SelectedAnnotationViewController.swift */,
+				BB38D40C21BC677800A1ED93 /* SelectedAnnotationView.swift */,
 			);
-			path = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,6 +184,7 @@
 			files = (
 				BB708F59211338E4004A79F6 /* LaunchScreen.storyboard in Resources */,
 				BB708F56211338E4004A79F6 /* Assets.xcassets in Resources */,
+				BB60931621BC44CD0087BD97 /* SelectedAnnotationView.xib in Resources */,
 				BB708F54211338E3004A79F6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -180,9 +198,11 @@
 			files = (
 				BB708F51211338E3004A79F6 /* MainPageViewController.swift in Sources */,
 				BBF6062E2142CC9C00C940F7 /* TreeModel.swift in Sources */,
+				BB38D40D21BC677800A1ED93 /* SelectedAnnotationView.swift in Sources */,
 				BB708F4F211338E3004A79F6 /* AppDelegate.swift in Sources */,
 				BB948EDD2143BD7E007E9568 /* BookViewController.swift in Sources */,
 				BBCA14AD218105E200594ABE /* TreeAnnotation.swift in Sources */,
+				BB60931121BC3BFF0087BD97 /* SelectedAnnotationViewController.swift in Sources */,
 				BB948EDA2143BD15007E9568 /* MapViewController.swift in Sources */,
 				BBE060B02119C25300A52347 /* CameraViewController.swift in Sources */,
 				BB5B6FF92166B1D600C3B1AD /* SelectedTreeViewController.swift in Sources */,

@@ -14,7 +14,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
     
     var forest: NSArray = NSArray()
     var locations: NSArray = NSArray()
-    var treeLocationArray = [TreeAnnotation]()
+    var treeLocation = [TreeAnnotation]()
     var arrayOfForest = [TreeModel]()
     var darkMode = false
     var searchController: UISearchController!
@@ -72,7 +72,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         
         if segue.identifier == "mapViewSegue" {
             let destVC = segue.destination as! MapViewController
-            destVC.treeLocationArray = treeLocationArray
+            destVC.treeLocationArray = treeLocation
             
         }
 
@@ -123,7 +123,7 @@ extension MainPageViewController: TreeAnnotationProtocol {
         locations = item
         
         for item in 0 ..< locations.count {
-            treeLocationArray.append(locations[item] as! TreeAnnotation)
+            treeLocation.append(locations[item] as! TreeAnnotation)
         }
     }
 }

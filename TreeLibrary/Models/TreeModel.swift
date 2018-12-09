@@ -20,7 +20,7 @@ class TreeModel: NSObject, URLSessionDelegate{
 
     var data = Data()
 
-    let urlPath = "http://12ceyrek.com/mertalp/service.php"
+    let urlPath = "https://12ceyrek.me/service.php"
 
     func downloadItems() {
 
@@ -38,7 +38,7 @@ class TreeModel: NSObject, URLSessionDelegate{
             }else {
                 guard let data = data else { return }
 
-                array = self.parseJSON(data) as! NSMutableArray
+                array = self.parseJSON(data)
                 print("The number of thee downloaded is  \(array.count)")
             }
 
@@ -48,7 +48,7 @@ class TreeModel: NSObject, URLSessionDelegate{
         
     }
 
-    func parseJSON(_ data: Data) -> NSArray {
+    func parseJSON(_ data: Data) -> NSMutableArray {
         do{
             guard let jsonResult = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
                 print("Invalid JSON structure")

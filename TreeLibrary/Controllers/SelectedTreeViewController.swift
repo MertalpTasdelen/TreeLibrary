@@ -69,9 +69,8 @@ class SelectedTreeViewController: UIViewController {
             labelLeafType.text = "Kapalı Yaprak"
         }
         
-        let rootUrl = "http://www.12ceyrek.com/mertalp/tree_images/"
-        let name = selectedTree.latin_name
-        let hostUrl = name.replacingOccurrences(of: " ", with: "-")
+        let rootUrl = "https://12ceyrek.me/tree_images/"
+        let hostUrl = selectedTree.latin_name.replacingOccurrences(of: " ", with: "-")
         let leafEndPointUrl = "-leaf.jpg"
         let treeEndPointUrl = "-tree.jpg"
         
@@ -87,6 +86,7 @@ class SelectedTreeViewController: UIViewController {
             if error != nil {
                 print(error!)
             }else {
+                print("Geldii")
                 let treeImage = UIImage(data: data!)
                 
                 DispatchQueue.main.async {
