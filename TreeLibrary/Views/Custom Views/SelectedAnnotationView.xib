@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectedAnnotationView" customModule="TreeLibrary" customModuleProvider="target">
             <connections>
+                <outlet property="bothanicalPropertie" destination="twU-Bg-JLx" id="LcC-TN-Lka"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="N7g-vD-vBM"/>
                 <outlet property="holder" destination="cT5-ae-K77" id="r3A-Kz-pGY"/>
                 <outlet property="latinNameTextField" destination="cps-sN-QhY" id="N1V-Bs-6MY"/>
                 <outlet property="leafType" destination="cgr-du-lnI" id="KbV-71-m5I"/>

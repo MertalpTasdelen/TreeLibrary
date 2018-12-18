@@ -8,91 +8,129 @@
 
 import UIKit
 import AVFoundation
+import CoreML
+import Vision
+import Photos
 
 class CameraViewController: UIViewController {
     
-    var captureSession = AVCaptureSession()
-    var backCamera: AVCaptureDevice?
-    var frontCamera: AVCaptureDevice?
-    var currentCamera: AVCaptureDevice?
+    let cameraController = CameraConfigurationController()
     
-    var photoOutput: AVCapturePhotoOutput?
-    
-    var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
-    
-
-    @IBAction func cancelTakenImage(_ sender: UIButton) {
+    @IBOutlet var capturePreviewView: UIView!
+    @IBOutlet weak var toogleFlashButton: UIButton!
+    @IBOutlet weak var captureButton: UIButton!
+    @IBOutlet weak var cameraScreen: UIImageView!
+    @IBAction func goBack(_ sender: Any) {
+       dismiss(animated: true, completion: nil) // düzgün şekilde olması için comletion kısmını doldurman gerek bence araştır
     }
-    @IBAction func imageSave(_ sender: UIButton) {
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
     
-//        setupCaptureSession()
-//        setupDevice()
-//        setupInputOutput()
-//        setupPreviewLayer()
-//        startRunningCaptureSession()
-
-        // Do any additional setup after loading the view.
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
-
-
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        didPressTakeAnother()
+    }
 }
-
 
 extension CameraViewController {
     
-    func setupCaptureSession(){
-        //seting the photo quality
-        captureSession.sessionPreset = AVCaptureSession.Preset.photo
+    @IBAction func toogleFlah(_ sender: Any) {
+        if cameraController.flashMode == .off {
+            cameraController.flashMode = .on
+            toogleFlashButton.setImage(UIImage(named: "flash-on-indicator"), for: .normal)
+        }
+        else {
+            cameraController.flashMode = .off
+            toogleFlashButton.setImage(UIImage(named: "flash-off"), for: .normal)
+        }
     }
     
-    func setupDevice(){
-        //setup the device camera for our capture
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
-        
-        let devices = deviceDiscoverySession.devices
-        
-        for device in devices {
-            if device.position == AVCaptureDevice.Position.back {
-                backCamera = device
-            }else if device.position == AVCaptureDevice.Position.front {
-                frontCamera = device
+    @IBAction func captureImage(_ sender: Any) {
+        cameraController.captureImage {(image, error) in
+            guard let image = image else {
+                print(error ?? "Image capture error")
+                return
+            }
+            self.cameraScreen.image = image
+            guard let ciImage = CIImage(image: image) else {
+                fatalError("Could not conver to CIImage")
+            }
+            self.detect(image: ciImage)
+            self.cameraScreen.isHidden = false
+            
+            try? PHPhotoLibrary.shared().performChangesAndWait {
+                PHAssetChangeRequest.creationRequestForAsset(from: image)
             }
         }
-        
-        currentCamera = backCamera
     }
     
-    func setupInputOutput(){
+    func detect(image: CIImage) {
+        
+        guard let model = try? VNCoreMLModel(for: Inceptionv3().model) else {
+            fatalError("Loading CoreML model failed.")
+        }
+        
+        let request = VNCoreMLRequest(model: model) { (request, error) in
+            guard let results = request.results as? [VNClassificationObservation] else {
+                fatalError("Model Failed to process Image")
+            }
+            
+            print(results)
+        }
+        
+        let handler = VNImageRequestHandler(ciImage: image)
         
         do{
             
-            let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
-            captureSession.addInput(captureDeviceInput)
-            photoOutput = AVCapturePhotoOutput()
-            photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
-            captureSession.addOutput(photoOutput!)
-            
+        try handler.perform([request])
+        
         } catch {
             print(error)
         }
         
     }
     
-    func setupPreviewLayer(){
+    func didPressTakeAnother() {
         
-        cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-        cameraPreviewLayer?.frame = self.view.frame
-        self.view.layer.insertSublayer(cameraPreviewLayer!, at: 0)
-    }
-    
-    func startRunningCaptureSession(){
-        
-        captureSession.startRunning()
-        
+        if cameraScreen.isHidden == false {
+            
+            cameraScreen.isHidden = true
+            
+        } else {
+            cameraController.captureSession?.startRunning()
+        }
     }
 }
+
+
+extension CameraViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        cameraScreen.isHidden = true
+        func configureCameraViewController(){
+            cameraController.prepare { (error) in
+                if let error = error {
+                    print(error)
+                }
+                
+                try? self.cameraController.displayPreview(on: self.capturePreviewView)
+            }
+        }
+        
+        func styleCaptureButton(){
+            captureButton.layer.borderColor = UIColor.darkGray.cgColor
+            captureButton.layer.borderWidth = 7
+            
+            captureButton.layer.cornerRadius = min(captureButton.frame.width,captureButton.frame.height) / 2
+        }
+        
+        styleCaptureButton()
+        configureCameraViewController()
+    }
+    
+}
+
+
+

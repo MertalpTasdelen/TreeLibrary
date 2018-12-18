@@ -12,6 +12,7 @@ import UIKit
 class SelectedAnnotationViewController:UIViewController {
     
     let newPage = Bundle.main.loadNibNamed("SelectedAnnotationView", owner: self, options: nil)?.first as? SelectedAnnotationView
+
     let fullView: CGFloat = 90
     var partialView: CGFloat{
         let returnVal = (UIScreen.main.bounds.height)-((newPage?.latinNameTextField.frame.maxY)! + UIApplication.shared.statusBarFrame.height)
