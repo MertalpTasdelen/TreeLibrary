@@ -63,6 +63,8 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         
     }
     
+
+    
     //MARK: Sending data to another VCs
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "bookViewSegue" {
@@ -112,32 +114,10 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func reportError(_ sender: UIButton) {
         //report area seçenek kutusundan hata işaretlenecek yazılacak gönderilecek.
+        sendErrorMail()
         
-        if !MFMailComposeViewController.canSendMail() {
-            print("Mail services are not available")
-            
-            let alert = UIAlertController(title: "HATA !", message: "Mail açılırken bir sorun oluştu", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Yeniden Dene", style: .default, handler: { (action) in
-                
-            }))
-            self.present(alert, animated: true, completion: nil)// hatadan sonra gösterilecek ekran oradaki mail
-            return
-        }
-        
-        
-        let mail = MFMailComposeViewController()
-        mail.mailComposeDelegate = self//burada hata var
-        
-        mail.setToRecipients(["alptasdelen@hotmail.com"])
-        mail.setSubject("Uygulamada Hata")
-        mail.setMessageBody("<b>Probleminizi bizimle paylaşın<b>", isHTML: true)
-        
-        self.present(mail, animated: true)
     }
     
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true)
-    }
     //END OF CLASS
 }
 
@@ -160,6 +140,39 @@ extension MainPageViewController: TreeModelProtocol {
             arrayOfForest.append(forest[item] as! TreeModel)
         }
     }
+}
+
+extension MainPageViewController: MFMailComposeViewControllerDelegate{
+   
+    func sendErrorMail(){
+        
+        if !MFMailComposeViewController.canSendMail() {
+            print("Mail services are not available")
+            
+            let alert = UIAlertController(title: "HATA !", message: "Mail açılırken bir sorun oluştu", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Yeniden Dene", style: .default, handler: { (action) in
+                
+            }))
+            self.present(alert, animated: true, completion: nil)// hatadan sonra gösterilecek ekran oradaki mail
+            return
+        }
+        
+        
+        let mail = MFMailComposeViewController()
+        mail.mailComposeDelegate = self//burada hata var
+        
+        mail.setToRecipients(["alptasdelen@hotmail.com"])
+        mail.setSubject("Uygulamada Hata")
+        mail.setMessageBody("<b>Probleminizi bizimle paylaşın<b>", isHTML: true)
+        
+        self.present(mail, animated: true)
+        
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 
