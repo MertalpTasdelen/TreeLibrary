@@ -70,6 +70,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uPO-ny-L4g" userLabel="ReportButton">
                                                 <rect key="frame" x="43.666666666666657" y="187.99999999999994" width="127" height="23"/>
                                                 <state key="normal" image="ReportBugFinal"/>
+                                                <connections>
+                                                    <action selector="reportError:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wDi-aS-ana"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
