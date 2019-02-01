@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3581E670E8ED5ECC1C7C02CE /* Pods_TreeLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4D66D1872115EA6BB490D8 /* Pods_TreeLibrary.framework */; };
 		BB38D40D21BC677800A1ED93 /* SelectedAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38D40C21BC677800A1ED93 /* SelectedAnnotationView.swift */; };
 		BB491B0921C56EDA00D0F912 /* CameraConfigurationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB491B0821C56EDA00D0F912 /* CameraConfigurationController.swift */; };
 		BB491B0B21C5D3F100D0F912 /* Inceptionv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BB491B0A21C5D3F100D0F912 /* Inceptionv3.mlmodel */; };
-		BB491B0D21C5D9B800D0F912 /* TreeImageClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BB491B0C21C5D9B700D0F912 /* TreeImageClassifier.mlmodel */; };
 		BB5B6FF92166B1D600C3B1AD /* SelectedTreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B6FF82166B1D600C3B1AD /* SelectedTreeViewController.swift */; };
 		BB60931121BC3BFF0087BD97 /* SelectedAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60931021BC3BFF0087BD97 /* SelectedAnnotationViewController.swift */; };
 		BB60931621BC44CD0087BD97 /* SelectedAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB60931521BC44CD0087BD97 /* SelectedAnnotationView.xib */; };
@@ -19,6 +19,7 @@
 		BB708F54211338E3004A79F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB708F52211338E3004A79F6 /* Main.storyboard */; };
 		BB708F56211338E4004A79F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB708F55211338E4004A79F6 /* Assets.xcassets */; };
 		BB708F59211338E4004A79F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB708F57211338E4004A79F6 /* LaunchScreen.storyboard */; };
+		BB7DAB1221F1408B00445AAD /* TreeImageClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BB7DAB1121F1408A00445AAD /* TreeImageClassifier.mlmodel */; };
 		BB948EDA2143BD15007E9568 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB948ED92143BD15007E9568 /* MapViewController.swift */; };
 		BB948EDD2143BD7E007E9568 /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB948EDC2143BD7E007E9568 /* BookViewController.swift */; };
 		BBCA14AD218105E200594ABE /* TreeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCA14AC218105E200594ABE /* TreeAnnotation.swift */; };
@@ -27,10 +28,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7314C1C4C5C4585B085B3E68 /* Pods-TreeLibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TreeLibrary.release.xcconfig"; path = "Pods/Target Support Files/Pods-TreeLibrary/Pods-TreeLibrary.release.xcconfig"; sourceTree = "<group>"; };
 		BB38D40C21BC677800A1ED93 /* SelectedAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedAnnotationView.swift; sourceTree = "<group>"; };
 		BB491B0821C56EDA00D0F912 /* CameraConfigurationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraConfigurationController.swift; sourceTree = "<group>"; };
 		BB491B0A21C5D3F100D0F912 /* Inceptionv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Inceptionv3.mlmodel; sourceTree = "<group>"; };
-		BB491B0C21C5D9B700D0F912 /* TreeImageClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TreeImageClassifier.mlmodel; sourceTree = "<group>"; };
 		BB5B6FF82166B1D600C3B1AD /* SelectedTreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTreeViewController.swift; sourceTree = "<group>"; };
 		BB60931021BC3BFF0087BD97 /* SelectedAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedAnnotationViewController.swift; sourceTree = "<group>"; };
 		BB60931521BC44CD0087BD97 /* SelectedAnnotationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SelectedAnnotationView.xib; path = "TreeLibrary/Views/Custom Views/SelectedAnnotationView.xib"; sourceTree = SOURCE_ROOT; };
@@ -41,11 +42,14 @@
 		BB708F55211338E4004A79F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB708F58211338E4004A79F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BB708F5A211338E4004A79F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB7DAB1121F1408A00445AAD /* TreeImageClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TreeImageClassifier.mlmodel; sourceTree = "<group>"; };
 		BB948ED92143BD15007E9568 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		BB948EDC2143BD7E007E9568 /* BookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
 		BBCA14AC218105E200594ABE /* TreeAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeAnnotation.swift; sourceTree = "<group>"; };
 		BBE060AF2119C25300A52347 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		BBF6062D2142CC9C00C940F7 /* TreeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeModel.swift; sourceTree = "<group>"; };
+		CE4D66D1872115EA6BB490D8 /* Pods_TreeLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TreeLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEC3C79E15273745F976695D /* Pods-TreeLibrary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TreeLibrary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TreeLibrary/Pods-TreeLibrary.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,12 +57,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3581E670E8ED5ECC1C7C02CE /* Pods_TreeLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		422A67A136AF30197D96FD1D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE4D66D1872115EA6BB490D8 /* Pods_TreeLibrary.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		87C194466A2A19E91BEE9D25 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DEC3C79E15273745F976695D /* Pods-TreeLibrary.debug.xcconfig */,
+				7314C1C4C5C4585B085B3E68 /* Pods-TreeLibrary.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BB60931221BC41740087BD97 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +95,8 @@
 			children = (
 				BB708F4D211338E3004A79F6 /* TreeLibrary */,
 				BB708F4C211338E3004A79F6 /* Products */,
+				87C194466A2A19E91BEE9D25 /* Pods */,
+				422A67A136AF30197D96FD1D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,8 +111,8 @@
 		BB708F4D211338E3004A79F6 /* TreeLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				BB7DAB1121F1408A00445AAD /* TreeImageClassifier.mlmodel */,
 				BB491B0A21C5D3F100D0F912 /* Inceptionv3.mlmodel */,
-				BB491B0C21C5D9B700D0F912 /* TreeImageClassifier.mlmodel */,
 				BB96EDC92118728500C10606 /* Controllers */,
 				BB96EDC82118728100C10606 /* Views */,
 				BB96EDC72118727B00C10606 /* Models */,
@@ -139,9 +163,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB708F5D211338E4004A79F6 /* Build configuration list for PBXNativeTarget "TreeLibrary" */;
 			buildPhases = (
+				443F9755D8793B79B6C1B494 /* [CP] Check Pods Manifest.lock */,
 				BB708F47211338E3004A79F6 /* Sources */,
 				BB708F48211338E3004A79F6 /* Frameworks */,
 				BB708F49211338E3004A79F6 /* Resources */,
+				DE7D7765B539CD994441EB2B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -200,12 +226,51 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		443F9755D8793B79B6C1B494 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TreeLibrary-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE7D7765B539CD994441EB2B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TreeLibrary/Pods-TreeLibrary-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FloatingPanel/FloatingPanel.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FloatingPanel.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TreeLibrary/Pods-TreeLibrary-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BB708F47211338E3004A79F6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB491B0D21C5D9B800D0F912 /* TreeImageClassifier.mlmodel in Sources */,
+				BB7DAB1221F1408B00445AAD /* TreeImageClassifier.mlmodel in Sources */,
 				BB708F51211338E3004A79F6 /* MainPageViewController.swift in Sources */,
 				BB491B0B21C5D3F100D0F912 /* Inceptionv3.mlmodel in Sources */,
 				BBF6062E2142CC9C00C940F7 /* TreeModel.swift in Sources */,
@@ -359,8 +424,10 @@
 		};
 		BB708F5E211338E4004A79F6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DEC3C79E15273745F976695D /* Pods-TreeLibrary.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J93C36GZ6U;
 				INFOPLIST_FILE = TreeLibrary/Info.plist;
@@ -371,6 +438,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.12ceyrek.TreeLibrary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -378,8 +446,10 @@
 		};
 		BB708F5F211338E4004A79F6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7314C1C4C5C4585B085B3E68 /* Pods-TreeLibrary.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J93C36GZ6U;
 				INFOPLIST_FILE = TreeLibrary/Info.plist;
@@ -390,6 +460,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.12ceyrek.TreeLibrary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -62,6 +62,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         
     }
     
+    //MARK: Sending data to another VCs
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "bookViewSegue" {
             let rootNavigationViewController = segue.destination as! UINavigationController
@@ -74,6 +75,11 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
             let destVC = segue.destination as! MapViewController
             destVC.treeLocationArray = treeLocation
             
+        }
+        
+        if segue.identifier == "cameraSegue" {
+            let destVC = segue.destination as! CameraViewController
+            destVC.treeList += arrayOfForest
         }
 
     }
@@ -99,6 +105,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func openCameraScreen(_ sender: UIButton) {
         performSegue(withIdentifier: "cameraSegue", sender: self)
+        
     }
     
     @IBAction func openMapView(_ sender: UIButton) {

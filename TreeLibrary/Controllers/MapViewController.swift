@@ -39,7 +39,7 @@ class MapViewController: UIViewController {
         let orientation = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(orientation, forKey: "orientation")
         setNeedsStatusBarAppearanceUpdate()
-        addSelectedAnnotationView()
+        //addSelectedAnnotationView() Burasi uygulamayi patlatiyor su an
         checkLocationServices()
     }
     

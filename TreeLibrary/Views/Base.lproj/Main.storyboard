@@ -40,20 +40,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hZe-0c-ZSI" userLabel="MiddelContainer">
                                 <rect key="frame" x="0.0" y="117.00000000000003" width="375" height="302.66666666666674"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QsU-NS-p9V" userLabel="FindTree">
-                                        <rect key="frame" x="45" y="21" width="286" height="259"/>
-                                        <state key="normal" image="FindTree"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldr-lz-AnF">
+                                        <rect key="frame" x="45" y="86.666666666666629" width="285" height="205.99999999999997"/>
+                                        <state key="normal" image="FindTreeFinal"/>
                                         <connections>
-                                            <action selector="openCameraScreen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZcG-Ps-cb0"/>
-                                            <segue destination="Rbx-8U-bPg" kind="show" identifier="cameraSegue" id="uT7-eQ-Une"/>
+                                            <action selector="openCameraScreen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3P0-Tf-UGl"/>
+                                            <segue destination="Rbx-8U-bPg" kind="show" identifier="cameraSegue" id="9Q8-hc-sOo"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="QsU-NS-p9V" firstAttribute="leading" secondItem="hZe-0c-ZSI" secondAttribute="leading" constant="45" id="Grd-Wj-A8e"/>
-                                    <constraint firstAttribute="bottom" secondItem="QsU-NS-p9V" secondAttribute="bottom" constant="22.5" id="b3h-MN-moB"/>
-                                    <constraint firstItem="QsU-NS-p9V" firstAttribute="top" secondItem="hZe-0c-ZSI" secondAttribute="top" constant="21" id="f6k-UO-Wtd"/>
-                                    <constraint firstAttribute="trailing" secondItem="QsU-NS-p9V" secondAttribute="trailing" constant="44" id="ieE-rS-oj6"/>
+                                    <constraint firstItem="ldr-lz-AnF" firstAttribute="centerX" secondItem="hZe-0c-ZSI" secondAttribute="centerX" id="82B-Bh-oRw"/>
+                                    <constraint firstAttribute="bottom" secondItem="ldr-lz-AnF" secondAttribute="bottom" constant="10" id="Qj6-gx-aEw"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j6v-Md-EgT" userLabel="UnderMiddleContainer">
@@ -62,39 +60,39 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SXl-WA-6Vz" userLabel="LeftContainer">
                                         <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="302.33333333333331"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOz-zM-bPT" userLabel="SeeOnMap">
-                                                <rect key="frame" x="46" y="35" width="133.66666666666666" height="241"/>
-                                                <state key="normal" image="SeeOnMap"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3O-ew-AWd">
+                                                <rect key="frame" x="43.666666666666629" y="8" width="127" height="177"/>
+                                                <state key="normal" image="SeeOnMapFinal"/>
                                                 <connections>
-                                                    <action selector="openMapView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5hm-1x-coG"/>
-                                                    <segue destination="SLW-9S-Bhi" kind="show" identifier="mapViewSegue" id="GUG-BJ-Qi9"/>
+                                                    <segue destination="SLW-9S-Bhi" kind="show" identifier="mapViewSegue" id="fAh-5w-DIk"/>
                                                 </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uPO-ny-L4g">
+                                                <rect key="frame" x="43.666666666666629" y="187.99999999999994" width="127" height="23"/>
+                                                <state key="normal" image="ReportBugFinal"/>
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="VOz-zM-bPT" firstAttribute="top" secondItem="SXl-WA-6Vz" secondAttribute="top" constant="35" id="4vB-W9-Wef"/>
-                                            <constraint firstAttribute="bottom" secondItem="VOz-zM-bPT" secondAttribute="bottom" constant="26.5" id="5RS-rm-of6"/>
-                                            <constraint firstItem="VOz-zM-bPT" firstAttribute="leading" secondItem="SXl-WA-6Vz" secondAttribute="leading" constant="46" id="Gyr-Y1-f2y"/>
-                                            <constraint firstAttribute="trailing" secondItem="VOz-zM-bPT" secondAttribute="trailing" constant="8" id="IWQ-xr-WXj"/>
+                                            <constraint firstItem="uPO-ny-L4g" firstAttribute="top" secondItem="A3O-ew-AWd" secondAttribute="bottom" constant="3" id="RYw-qm-fAI"/>
+                                            <constraint firstItem="A3O-ew-AWd" firstAttribute="top" secondItem="SXl-WA-6Vz" secondAttribute="top" constant="8" id="gs1-vi-VUI"/>
+                                            <constraint firstAttribute="trailing" secondItem="A3O-ew-AWd" secondAttribute="trailing" constant="16.670000000000002" id="lfB-h6-GYf"/>
+                                            <constraint firstAttribute="trailing" secondItem="uPO-ny-L4g" secondAttribute="trailing" constant="16.670000000000002" id="lvF-qm-dPT"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZyG-52-QBj" userLabel="RightContainer">
                                         <rect key="frame" x="187.66666666666663" y="0.0" width="187.33333333333337" height="302.33333333333331"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNh-Uw-o8O" userLabel="SearchInBook">
-                                                <rect key="frame" x="8" y="35" width="133.33333333333334" height="241"/>
-                                                <state key="normal" image="SearchInBook"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCv-bp-L9d">
+                                                <rect key="frame" x="0.0" y="8" width="141" height="206"/>
+                                                <state key="normal" image="SearchInBookFinal"/>
                                                 <connections>
-                                                    <action selector="openBook:" destination="BYZ-38-t0r" eventType="touchUpInside" id="csT-sl-QpM"/>
-                                                    <segue destination="vhh-b9-vjE" kind="show" identifier="bookViewSegue" id="GyZ-VU-vUx"/>
+                                                    <segue destination="vhh-b9-vjE" kind="show" identifier="bookViewSegue" id="8ka-pO-A7h"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="ZNh-Uw-o8O" secondAttribute="trailing" constant="46" id="HRD-7E-dIq"/>
-                                            <constraint firstItem="ZNh-Uw-o8O" firstAttribute="top" secondItem="ZyG-52-QBj" secondAttribute="top" constant="35" id="cYX-9T-70W"/>
-                                            <constraint firstItem="ZNh-Uw-o8O" firstAttribute="leading" secondItem="ZyG-52-QBj" secondAttribute="leading" constant="8" id="d0B-84-nVf"/>
-                                            <constraint firstAttribute="bottom" secondItem="ZNh-Uw-o8O" secondAttribute="bottom" constant="26.5" id="l5J-5Z-4Tw"/>
+                                            <constraint firstItem="tCv-bp-L9d" firstAttribute="leading" secondItem="ZyG-52-QBj" secondAttribute="leading" id="jqS-M9-m0m"/>
+                                            <constraint firstItem="tCv-bp-L9d" firstAttribute="top" secondItem="ZyG-52-QBj" secondAttribute="top" constant="8" id="rnE-h4-Rbu"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -115,8 +113,8 @@
                                 <rect key="frame" x="0.0" y="722" width="375" height="56"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vH-be-bz6">
-                                        <rect key="frame" x="145.66666666666666" y="11" width="84" height="34"/>
-                                        <state key="normal" title="Hata Bildir">
+                                        <rect key="frame" x="51.666666666666629" y="11" width="272" height="34"/>
+                                        <state key="normal" title="Burası falza ine yapabilirisn düşün">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -162,7 +160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="920.625" y="115.14084507042254"/>
+            <point key="canvasLocation" x="919.20000000000005" y="114.53201970443351"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="4XR-Ve-d70">
@@ -493,7 +491,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7t6-w0-wZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3082.03125" y="925.0366032210834"/>
+            <point key="canvasLocation" x="3081" y="927"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="cUh-bp-rJA">
@@ -506,24 +504,16 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aPR-1T-7sg" userLabel="CameraScreen">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6O-eP-Nbd">
-                                <rect key="frame" x="147.66666666666666" y="678" width="80" height="80"/>
-                                <color key="backgroundColor" red="0.68888300657272339" green="0.71366006135940552" blue="0.73448425531387329" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="3Qk-em-wBa"/>
-                                    <constraint firstAttribute="height" constant="80" id="TkW-5j-6Eb"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="captureImage:" destination="Rbx-8U-bPg" eventType="touchUpInside" id="jao-BV-3Vk"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uqi-r8-k8O" userLabel="ButtonArea">
                                 <rect key="frame" x="0.0" y="44" width="375" height="76"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sHv-8H-R8E">
                                         <rect key="frame" x="10" y="10" width="15" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="back"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="back">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="goBack:" destination="Rbx-8U-bPg" eventType="touchUpInside" id="I2L-s7-uNp"/>
                                         </connections>
@@ -539,20 +529,28 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="76" id="gPO-un-r5R"/>
+                                    <constraint firstAttribute="height" constant="76" id="6gm-Yx-P7D"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6O-eP-Nbd">
+                                <rect key="frame" x="147" y="613" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.68888300657272339" green="0.71366006135940552" blue="0.73448425531387329" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="captureImage:" destination="Rbx-8U-bPg" eventType="touchUpInside" id="jao-BV-3Vk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="aPR-1T-7sg" secondAttribute="bottom" id="04J-IP-dQV"/>
-                            <constraint firstItem="Uqi-r8-k8O" firstAttribute="leading" secondItem="7zd-BP-1Ag" secondAttribute="leading" id="4dS-58-UiE"/>
-                            <constraint firstItem="aPR-1T-7sg" firstAttribute="leading" secondItem="VeA-7T-kFc" secondAttribute="leading" id="9bx-nF-LMs"/>
-                            <constraint firstItem="D6O-eP-Nbd" firstAttribute="centerX" secondItem="VeA-7T-kFc" secondAttribute="centerX" id="H5T-2M-mL1"/>
-                            <constraint firstItem="aPR-1T-7sg" firstAttribute="top" secondItem="VeA-7T-kFc" secondAttribute="top" id="Kaa-Pw-fuQ"/>
-                            <constraint firstItem="7zd-BP-1Ag" firstAttribute="bottom" secondItem="D6O-eP-Nbd" secondAttribute="bottom" constant="20" id="bg5-Un-WfI"/>
-                            <constraint firstAttribute="trailing" secondItem="aPR-1T-7sg" secondAttribute="trailing" id="dbR-ol-3YY"/>
-                            <constraint firstItem="Uqi-r8-k8O" firstAttribute="top" secondItem="7zd-BP-1Ag" secondAttribute="top" id="fEg-37-Tbd"/>
-                            <constraint firstItem="Uqi-r8-k8O" firstAttribute="trailing" secondItem="7zd-BP-1Ag" secondAttribute="trailing" id="mBp-nZ-vsV"/>
+                            <constraint firstItem="Uqi-r8-k8O" firstAttribute="trailing" secondItem="7zd-BP-1Ag" secondAttribute="trailing" id="2uC-6q-xlm"/>
+                            <constraint firstItem="Uqi-r8-k8O" firstAttribute="top" secondItem="7zd-BP-1Ag" secondAttribute="top" id="7Tx-7a-8zJ"/>
+                            <constraint firstAttribute="bottom" secondItem="aPR-1T-7sg" secondAttribute="bottom" id="NI9-GA-FOv"/>
+                            <constraint firstAttribute="bottom" secondItem="aPR-1T-7sg" secondAttribute="bottom" id="Xsz-uN-cKd"/>
+                            <constraint firstItem="Uqi-r8-k8O" firstAttribute="leading" secondItem="7zd-BP-1Ag" secondAttribute="leading" id="dct-P7-FeF"/>
+                            <constraint firstItem="aPR-1T-7sg" firstAttribute="trailing" secondItem="7zd-BP-1Ag" secondAttribute="trailing" id="hVD-XJ-eme"/>
+                            <constraint firstItem="aPR-1T-7sg" firstAttribute="leading" secondItem="7zd-BP-1Ag" secondAttribute="leading" id="pOx-6L-RqR"/>
+                            <constraint firstItem="aPR-1T-7sg" firstAttribute="top" secondItem="VeA-7T-kFc" secondAttribute="top" id="sdn-2r-bbN"/>
+                            <constraint firstItem="aPR-1T-7sg" firstAttribute="leading" secondItem="7zd-BP-1Ag" secondAttribute="leading" id="zuC-4Z-VjY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7zd-BP-1Ag"/>
                     </view>
@@ -565,7 +563,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aJO-jg-Rp2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2057.971014492754" y="114.94565217391305"/>
+            <point key="canvasLocation" x="2056.8000000000002" y="114.53201970443351"/>
         </scene>
         <!--Navigation View Controller-->
         <scene sceneID="uaI-Z3-hez">
@@ -587,9 +585,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="FindTree" width="396.66665649414062" height="286"/>
-        <image name="SearchInBook" width="190.33332824707031" height="264"/>
-        <image name="SeeOnMap" width="190.33332824707031" height="264"/>
+        <image name="FindTreeFinal" width="285.33334350585938" height="206"/>
+        <image name="ReportBugFinal" width="127.66666412353516" height="23"/>
+        <image name="SearchInBookFinal" width="141" height="206"/>
+        <image name="SeeOnMapFinal" width="127.66666412353516" height="177"/>
         <image name="back" width="218" height="411"/>
         <image name="flash-off" width="48" height="48"/>
     </resources>
