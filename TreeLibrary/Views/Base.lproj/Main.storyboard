@@ -40,8 +40,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hZe-0c-ZSI" userLabel="MiddelContainer">
                                 <rect key="frame" x="0.0" y="117.00000000000003" width="375" height="302.66666666666674"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldr-lz-AnF">
-                                        <rect key="frame" x="45" y="86.666666666666629" width="285" height="205.99999999999997"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldr-lz-AnF" userLabel="CameraButton">
+                                        <rect key="frame" x="45" y="86.666666666666657" width="285" height="205.99999999999997"/>
                                         <state key="normal" image="FindTreeFinal"/>
                                         <connections>
                                             <action selector="openCameraScreen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3P0-Tf-UGl"/>
@@ -60,15 +60,15 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SXl-WA-6Vz" userLabel="LeftContainer">
                                         <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="302.33333333333331"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3O-ew-AWd">
-                                                <rect key="frame" x="43.666666666666629" y="8" width="127" height="177"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3O-ew-AWd" userLabel="MapButton">
+                                                <rect key="frame" x="43.666666666666657" y="8" width="127" height="177"/>
                                                 <state key="normal" image="SeeOnMapFinal"/>
                                                 <connections>
                                                     <segue destination="SLW-9S-Bhi" kind="show" identifier="mapViewSegue" id="fAh-5w-DIk"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uPO-ny-L4g">
-                                                <rect key="frame" x="43.666666666666629" y="187.99999999999994" width="127" height="23"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uPO-ny-L4g" userLabel="ReportButton">
+                                                <rect key="frame" x="43.666666666666657" y="187.99999999999994" width="127" height="23"/>
                                                 <state key="normal" image="ReportBugFinal"/>
                                             </button>
                                         </subviews>
@@ -82,7 +82,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZyG-52-QBj" userLabel="RightContainer">
                                         <rect key="frame" x="187.66666666666663" y="0.0" width="187.33333333333337" height="302.33333333333331"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCv-bp-L9d">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCv-bp-L9d" userLabel="BookButton">
                                                 <rect key="frame" x="0.0" y="8" width="141" height="206"/>
                                                 <state key="normal" image="SearchInBookFinal"/>
                                                 <connections>
@@ -113,7 +113,7 @@
                                 <rect key="frame" x="0.0" y="722" width="375" height="56"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vH-be-bz6">
-                                        <rect key="frame" x="51.666666666666629" y="11" width="272" height="34"/>
+                                        <rect key="frame" x="51.666666666666657" y="11" width="272" height="34"/>
                                         <state key="normal" title="Burası falza ine yapabilirisn düşün">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
