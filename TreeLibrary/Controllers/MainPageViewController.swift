@@ -13,6 +13,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
 
     
     
+    @IBOutlet weak var sliderSearchButton: UIButton!
     var forest: NSArray = NSArray()
     var locations: NSArray = NSArray()
     var treeLocation = [TreeAnnotation]()
@@ -58,7 +59,8 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(openSearchBar))
         swipeDown.direction = .down
-        self.view.addGestureRecognizer(swipeDown)
+        sliderSearchButton.addGestureRecognizer(swipeDown)
+//        self.view.addGestureRecognizer(swipeDown)
 
         
     }

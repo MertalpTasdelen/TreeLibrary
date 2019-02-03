@@ -30,6 +30,11 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RUz-lL-s2g">
+                                        <rect key="frame" x="179" y="48" width="17" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="two-down-arrow"/>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="73" id="3mU-ne-x9y"/>
@@ -159,6 +164,7 @@
                         <outlet property="backgroundImage" destination="IfQ-46-l2j" id="Jow-bL-bLc"/>
                         <outlet property="searchContainerBottomEdge" destination="ILq-us-6nl" id="N6d-CT-uvE"/>
                         <outlet property="searchContainerView" destination="45v-5s-ppn" id="MZa-ap-e5h"/>
+                        <outlet property="sliderSearchButton" destination="RUz-lL-s2g" id="2nx-Ks-gML"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -594,5 +600,6 @@
         <image name="SeeOnMapFinal" width="127.66666412353516" height="177"/>
         <image name="back" width="218" height="411"/>
         <image name="flash-off" width="48" height="48"/>
+        <image name="two-down-arrow" width="204.80000305175781" height="204.80000305175781"/>
     </resources>
 </document>
