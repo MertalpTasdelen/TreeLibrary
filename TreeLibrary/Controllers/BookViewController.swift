@@ -57,8 +57,6 @@ class BookViewController: UIViewController{
         definesPresentationContext = true
     }
     
-
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "selectedTreeSegue" {
             if let indexPath = treeTableView.indexPathForSelectedRow{

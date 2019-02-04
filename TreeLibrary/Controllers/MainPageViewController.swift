@@ -13,15 +13,21 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
 
     
     
-    @IBOutlet weak var sliderSearchButton: UIButton!
+   
     var forest: NSArray = NSArray()
     var locations: NSArray = NSArray()
     var treeLocation = [TreeAnnotation]()
     var arrayOfForest = [TreeModel]()
     var darkMode = false
     var searchController: UISearchController!
+    //This property used for peparing the bacground randomly
     @IBOutlet weak var backgroundImage: UIImageView!
     
+    
+    
+    @IBOutlet weak var sliderSearchLabel: UIButton!
+    @IBOutlet weak var sliderSearchButton: UIButton!
+    //Bu ikisi ilerideki arama kısmının açılması için eklendi
     @IBOutlet weak var searchContainerBottomEdge: NSLayoutConstraint!
     @IBOutlet weak var searchContainerView: UIView!
 
@@ -40,6 +46,9 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        slideAnimation(animatedButton: sliderSearchLabel)
+        slideAnimation(animatedButton: sliderSearchButton)
         
         let orientation = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(orientation, forKey: "orientation")
@@ -60,8 +69,6 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(openSearchBar))
         swipeDown.direction = .down
         sliderSearchButton.addGestureRecognizer(swipeDown)
-//        self.view.addGestureRecognizer(swipeDown)
-
         
     }
     
@@ -104,8 +111,10 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
 
     }
     
+    //TODO:  buraya artık arama işlevini getir !!
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //harf girildiğinde arama işlemi yapılan kısım
+        
     }
     
     @IBAction func openCameraScreen(_ sender: UIButton) {
@@ -115,9 +124,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
     
     
     @IBAction func reportError(_ sender: UIButton) {
-        //report area seçenek kutusundan hata işaretlenecek yazılacak gönderilecek.
         sendErrorMail()
-        
     }
     
     //END OF CLASS
@@ -175,6 +182,33 @@ extension MainPageViewController: MFMailComposeViewControllerDelegate{
         controller.dismiss(animated: true, completion: nil)
     }
     
+}
+
+//MARK: Animations
+extension MainPageViewController {
+    
+    //complition handler ekle animasyon bitince yazı ve ok kaybolmasını sağla
+    func slideAnimation(animatedButton item: UIButton){
+        
+        let shake = CABasicAnimation(keyPath: "position")
+        shake.duration = 0.7
+        shake.repeatCount = 3
+        shake.autoreverses = true
+        
+        let fromPoint = CGPoint(x: item.frame.midX, y: item.frame.midY)
+        let fromValue = NSValue(cgPoint: fromPoint)
+        
+        let toPoint = CGPoint(x: item.frame.midX, y: item.frame.midY + 4)
+        let toValue = NSValue(cgPoint: toPoint)
+        
+        shake.fromValue = fromValue
+        shake.toValue = toValue
+        
+        item.layer.add(shake, forKey: "position")
+
+    }
+    
+
 }
 
 

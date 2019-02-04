@@ -24,22 +24,28 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="45v-5s-ppn" userLabel="SearcContainer">
                                 <rect key="frame" x="0.0" y="44" width="375" height="73"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arama yapmak için kaydırın" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kdl-YO-Ulf">
-                                        <rect key="frame" x="94.666666666666686" y="27" width="186" height="18"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RUz-lL-s2g">
-                                        <rect key="frame" x="179" y="48" width="17" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P6R-dg-Ea9">
+                                        <rect key="frame" x="110.66666666666669" y="13" width="154" height="27"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                        <state key="normal" title="Arama yapmak için kaydırın">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RUz-lL-s2g">
+                                        <rect key="frame" x="179" y="38" width="17" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="17" id="HVF-el-PFC"/>
+                                            <constraint firstAttribute="height" constant="17" id="Lh0-ir-fAz"/>
+                                        </constraints>
                                         <state key="normal" image="two-down-arrow"/>
                                     </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="73" id="3mU-ne-x9y"/>
-                                    <constraint firstItem="Kdl-YO-Ulf" firstAttribute="centerX" secondItem="45v-5s-ppn" secondAttribute="centerX" id="JcS-32-x9H"/>
-                                    <constraint firstItem="Kdl-YO-Ulf" firstAttribute="top" secondItem="45v-5s-ppn" secondAttribute="top" constant="27" id="fZO-WE-tHq"/>
+                                    <constraint firstItem="RUz-lL-s2g" firstAttribute="top" secondItem="45v-5s-ppn" secondAttribute="top" constant="38" id="7o8-Kf-8NY"/>
+                                    <constraint firstItem="P6R-dg-Ea9" firstAttribute="top" secondItem="45v-5s-ppn" secondAttribute="top" constant="13" id="hDc-Yz-CZI"/>
+                                    <constraint firstItem="P6R-dg-Ea9" firstAttribute="centerX" secondItem="45v-5s-ppn" secondAttribute="centerX" id="phw-DK-6L1"/>
+                                    <constraint firstItem="RUz-lL-s2g" firstAttribute="centerX" secondItem="45v-5s-ppn" secondAttribute="centerX" id="yYS-da-asg"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hZe-0c-ZSI" userLabel="MiddelContainer">
@@ -165,6 +171,7 @@
                         <outlet property="searchContainerBottomEdge" destination="ILq-us-6nl" id="N6d-CT-uvE"/>
                         <outlet property="searchContainerView" destination="45v-5s-ppn" id="MZa-ap-e5h"/>
                         <outlet property="sliderSearchButton" destination="RUz-lL-s2g" id="2nx-Ks-gML"/>
+                        <outlet property="sliderSearchLabel" destination="P6R-dg-Ea9" id="xEQ-HQ-QnZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
