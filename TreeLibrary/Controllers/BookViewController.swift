@@ -31,11 +31,10 @@ class BookViewController: UIViewController{
 
     @IBOutlet weak var treeTableView: UITableView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let orientation = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(orientation, forKey: "orientation")
+       // let orientation = UIInterfaceOrientation.portrait.rawValue
+        //UIDevice.current.setValue(orientation, forKey: "orientation")
         
         //table view delegats and datasource declaration
         self.treeTableView.delegate = self
@@ -82,14 +81,13 @@ class BookViewController: UIViewController{
         return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
     }
     
-    func searchBarIsEmpty()-> Bool {
+    func searchBarIsEmpty( )-> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "Hepsi"){
         let doesCategoryMatch = (scope == "Hepsi") || (scope == "İ.Yaprak") || (scope == "G.Yaprak") || (scope == "A.Tohum" || (scope == "K.Tohum"))
 
-        // filitreleme ve arama işlemleri şu an düzgün çalışıyor ama iyileştirme yapılmalı !! En son tekrar bak
         filteredForest = realForest.filter({ (tree: TreeModel) -> Bool in
             if scope == "İ.Yaprak"{
                 if searchBarIsEmpty(){

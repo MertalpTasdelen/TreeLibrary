@@ -13,13 +13,15 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
 
     
     
-   
+    private var myTableView: UITableView!
+    var blurEffectView = UIVisualEffectView()
     var forest: NSArray = NSArray()
     var locations: NSArray = NSArray()
     var treeLocation = [TreeAnnotation]()
+    var filteredTrees = [TreeModel]()
     var arrayOfForest = [TreeModel]()
     var darkMode = false
-    var searchController: UISearchController!
+    var searchController = UISearchController(searchResultsController: nil)
     //This property used for peparing the bacground randomly
     @IBOutlet weak var backgroundImage: UIImageView!
     
@@ -44,14 +46,27 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         return true
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         slideAnimation(animatedButton: sliderSearchLabel)
         slideAnimation(animatedButton: sliderSearchButton)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        let orientation = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(orientation, forKey: "orientation")
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Ağaç Ara"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
+        prepareTableView()
+        
+        //let orientation = UIInterfaceOrientation.portrait.rawValue
+        //UIDevice.current.setValue(orientation, forKey: "orientation")
         
         let treeModel = TreeModel()
         treeModel.delegate = self
@@ -69,10 +84,25 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(openSearchBar))
         swipeDown.direction = .down
         sliderSearchButton.addGestureRecognizer(swipeDown)
+        sliderSearchLabel.isEnabled = false
         
     }
     
 
+    @objc func openSearchBar(){
+
+        //MARK: Blur Effect If you want to use it
+//        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+//        blurEffectView = UIVisualEffectView(effect: blurEffect)
+//        blurEffectView.frame = view.bounds
+//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        self.view.addSubview(blurEffectView)
+        
+        // Present the view controller
+        present(searchController,animated: true, completion: nil)
+        self.view.addSubview(myTableView)
+        
+    }
     
     //MARK: Sending data to another VCs
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -93,28 +123,23 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
             let destVC = segue.destination as! CameraViewController
             destVC.treeList += arrayOfForest
         }
-
-    }
-
-    @objc func openSearchBar(){
-
-            let searchResultsController = storyboard!.instantiateViewController(withIdentifier: "MainPageViewController") as! MainPageViewController
-            
-            // Create the search controller and make it perform the results updating.
-            searchController = UISearchController(searchResultsController: searchResultsController)
-            searchController.searchResultsUpdater = searchResultsController as? UISearchResultsUpdating
-            searchController.hidesNavigationBarDuringPresentation = false
-            
-            // Present the view controller.
-            present(searchController, animated: true, completion: nil)
+        
+//        if segue.identifier == "selectedTreeSegue" {
+//            if let indexPath = myTableView.indexPathForSelectedRow{
+//                let tree: TreeModel
+//                if isFiltering(){
+//                    tree = filteredTrees[indexPath.row]
+//                }else {
+//                    tree = arrayOfForest[indexPath.row]
+//                }
+//
+//                let nextVC = segue.destination as! SelectedTreeViewController
+//                nextVC.selectedTree = tree
+//
+//            }
+//        }
         
 
-    }
-    
-    //TODO:  buraya artık arama işlevini getir !!
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //harf girildiğinde arama işlemi yapılan kısım
-        
     }
     
     @IBAction func openCameraScreen(_ sender: UIButton) {
@@ -198,7 +223,7 @@ extension MainPageViewController {
         let fromPoint = CGPoint(x: item.frame.midX, y: item.frame.midY)
         let fromValue = NSValue(cgPoint: fromPoint)
         
-        let toPoint = CGPoint(x: item.frame.midX, y: item.frame.midY + 4)
+        let toPoint = CGPoint(x: item.frame.midX, y: item.frame.midY + 7)
         let toValue = NSValue(cgPoint: toPoint)
         
         shake.fromValue = fromValue
@@ -209,6 +234,103 @@ extension MainPageViewController {
     }
     
 
+}
+
+extension MainPageViewController: UISearchResultsUpdating, UITableViewDelegate, UITableViewDataSource{
+    
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        //TODO
+        filteredContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    // Returns true if the text is empty or nil
+    func searchBarIsEmpty() -> Bool{
+         return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filteredContentForSearchText(_ searchText: String, scope: String = "Hepsi"){
+        filteredTrees = arrayOfForest.filter({ (tree: TreeModel) -> Bool in
+            return tree.turkish_name.lowercased().contains(searchText.lowercased())
+        })
+        
+        myTableView.reloadData()
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering() {
+            return filteredTrees.count
+        }
+        
+        return arrayOfForest.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let item: TreeModel
+        
+        if isFiltering(){
+            item = filteredTrees[indexPath.row]
+        }else {
+            item = arrayOfForest[indexPath.row]
+        }
+        
+        cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 16.0)
+        cell.textLabel!.text = item.turkish_name
+//        Burasi hata veriyor nedenini arastir
+//        cell.detailTextLabel!.text = item.botanical_prop
+//        cell.detailTextLabel!.textColor = UIColor.lightGray
+        return cell
+    }
+    
+    func prepareTableView(){
+        
+        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height + searchController.searchBar.frame.height - 1
+        let displayWidth: CGFloat = self.view.frame.width
+        let displayHeight: CGFloat = self.view.frame.height
+        
+        myTableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight))
+        myTableView.backgroundColor = UIColor.lightGray
+        myTableView.rowHeight = CGFloat(65.0)
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        myTableView.dataSource = self
+        myTableView.delegate = self
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        myTableView.removeFromSuperview()
+//        blurEffectView.removeFromSuperview()
+
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //burasi calismiyor neden bilmiyorum
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "SelectedTreeViewController") as! SelectedTreeViewController
+        if let indexPath = myTableView.indexPathForSelectedRow{
+            let tree: TreeModel
+            if isFiltering(){
+                tree = filteredTrees[indexPath.row]
+            }else {
+                tree = arrayOfForest[indexPath.row]
+            }
+            vc.selectedTree = tree
+        }
+        self.present(vc, animated: true, completion: nil)
+//        self.navigationController?.present(vc, animated: true, completion: nil)
+        
+        myTableView.deselectRow(at: indexPath, animated: false)
+    }
 }
 
 
