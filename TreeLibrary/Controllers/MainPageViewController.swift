@@ -317,6 +317,10 @@ extension MainPageViewController: UISearchResultsUpdating, UITableViewDelegate, 
         //burasi calismiyor neden bilmiyorum
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "SelectedTreeViewController") as! SelectedTreeViewController
+        let nav = UINavigationController(rootViewController: vc )
+        let backButton = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(closeVC))
+        nav.navigationItem.setLeftBarButton(backButton, animated: false)
+        
         if let indexPath = myTableView.indexPathForSelectedRow{
             let tree: TreeModel
             if isFiltering(){
@@ -326,10 +330,19 @@ extension MainPageViewController: UISearchResultsUpdating, UITableViewDelegate, 
             }
             vc.selectedTree = tree
         }
-        self.present(vc, animated: true, completion: nil)
-//        self.navigationController?.present(vc, animated: true, completion: nil)
+        
+        if searchController.isActive {
+            self.searchController.dismiss(animated: false) {
+                // Do what you want here like perform segue or present
+                self.present(nav, animated: true, completion: nil)
+            }
+        }
         
         myTableView.deselectRow(at: indexPath, animated: false)
+    }
+    
+    @objc func closeVC(){
+        dismiss(animated: true, completion: nil)
     }
 }
 
