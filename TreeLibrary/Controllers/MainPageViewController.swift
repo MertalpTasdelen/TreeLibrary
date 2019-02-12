@@ -319,8 +319,6 @@ extension MainPageViewController: UISearchResultsUpdating, UITableViewDelegate, 
         let vc = storyBoard.instantiateViewController(withIdentifier: "SelectedTreeViewController") as! SelectedTreeViewController
         
         let nav = UINavigationController(rootViewController: vc )
-        let backButton = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(closeVC))
-        nav.navigationItem.leftBarButtonItem = backButton
         
         if let indexPath = myTableView.indexPathForSelectedRow{
             let tree: TreeModel
