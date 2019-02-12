@@ -35,7 +35,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
 
 
     override var preferredStatusBarStyle : UIStatusBarStyle {
-        return darkMode ? .default : .lightContent
+        return .lightContent
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
@@ -315,11 +315,12 @@ extension MainPageViewController: UISearchResultsUpdating, UITableViewDelegate, 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         //burasi calismiyor neden bilmiyorum
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyBoard  = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "SelectedTreeViewController") as! SelectedTreeViewController
+        
         let nav = UINavigationController(rootViewController: vc )
         let backButton = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(closeVC))
-        nav.navigationItem.setLeftBarButton(backButton, animated: false)
+        nav.navigationItem.leftBarButtonItem = backButton
         
         if let indexPath = myTableView.indexPathForSelectedRow{
             let tree: TreeModel
@@ -334,6 +335,7 @@ extension MainPageViewController: UISearchResultsUpdating, UITableViewDelegate, 
         if searchController.isActive {
             self.searchController.dismiss(animated: false) {
                 // Do what you want here like perform segue or present
+                self.myTableView.removeFromSuperview()
                 self.present(nav, animated: true, completion: nil)
             }
         }

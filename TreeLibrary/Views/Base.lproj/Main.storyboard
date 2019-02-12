@@ -72,14 +72,14 @@
                                         <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="302.33333333333331"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3O-ew-AWd" userLabel="MapButton">
-                                                <rect key="frame" x="43.666666666666657" y="8" width="127" height="177"/>
+                                                <rect key="frame" x="44.666666666666657" y="8" width="127" height="177"/>
                                                 <state key="normal" image="SeeOnMapFinal"/>
                                                 <connections>
                                                     <segue destination="SLW-9S-Bhi" kind="show" identifier="mapViewSegue" id="fAh-5w-DIk"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uPO-ny-L4g" userLabel="ReportButton">
-                                                <rect key="frame" x="43.666666666666657" y="187.99999999999994" width="127" height="23"/>
+                                                <rect key="frame" x="44.666666666666657" y="189.99999999999994" width="127" height="23"/>
                                                 <state key="normal" image="ReportBugFinal"/>
                                                 <connections>
                                                     <action selector="reportError:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wDi-aS-ana"/>
@@ -87,10 +87,10 @@
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="uPO-ny-L4g" firstAttribute="top" secondItem="A3O-ew-AWd" secondAttribute="bottom" constant="3" id="RYw-qm-fAI"/>
+                                            <constraint firstItem="uPO-ny-L4g" firstAttribute="top" secondItem="A3O-ew-AWd" secondAttribute="bottom" constant="5" id="2Vj-SZ-7He"/>
+                                            <constraint firstAttribute="trailing" secondItem="uPO-ny-L4g" secondAttribute="trailing" constant="16" id="UP4-EB-mPv"/>
                                             <constraint firstItem="A3O-ew-AWd" firstAttribute="top" secondItem="SXl-WA-6Vz" secondAttribute="top" constant="8" id="gs1-vi-VUI"/>
-                                            <constraint firstAttribute="trailing" secondItem="A3O-ew-AWd" secondAttribute="trailing" constant="16.670000000000002" id="lfB-h6-GYf"/>
-                                            <constraint firstAttribute="trailing" secondItem="uPO-ny-L4g" secondAttribute="trailing" constant="16.670000000000002" id="lvF-qm-dPT"/>
+                                            <constraint firstAttribute="trailing" secondItem="A3O-ew-AWd" secondAttribute="trailing" constant="16" id="lIZ-Y5-knU"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZyG-52-QBj" userLabel="RightContainer">
@@ -488,7 +488,18 @@
                         <viewLayoutGuide key="safeArea" id="jvu-Xa-IYC"/>
                     </view>
                     <navigationItem key="navigationItem" id="QKp-OH-ihI">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="btC-Hj-PF7"/>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="action" id="cUi-U9-wkl" userLabel="Share Bar Button">
+                                <connections>
+                                    <action selector="treeShareButton:" destination="Ojv-31-Rz4" id="ujs-P8-a39"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="done" id="btC-Hj-PF7" userLabel="Done Bar Button">
+                                <connections>
+                                    <action selector="denemeButton:" destination="Ojv-31-Rz4" id="0bL-TY-dKV"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="bothanicalPropertieHeader" destination="Qy3-ql-lBk" id="BEL-dA-JRD"/>

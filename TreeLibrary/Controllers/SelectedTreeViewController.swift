@@ -29,6 +29,15 @@ class SelectedTreeViewController: UIViewController {
     @IBOutlet weak var navigationTitleItem: UINavigationItem!
     var selectedTree: TreeModel = TreeModel()
     
+    @IBAction func denemeButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    @IBAction func treeShareButton(_ sender: Any) {
+        print("Sharing...")
+    }
+    
+    
+    
     //if the program download so many data this will clear the cache
     override func didReceiveMemoryWarning() {
         URLCache.shared.removeAllCachedResponses()
