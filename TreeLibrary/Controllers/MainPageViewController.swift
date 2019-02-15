@@ -27,6 +27,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
     
     
     
+    @IBOutlet weak var sliderSearchArea: UIButton!
     @IBOutlet weak var sliderSearchLabel: UIButton!
     @IBOutlet weak var sliderSearchButton: UIButton!
     //Bu ikisi ilerideki arama kısmının açılması için eklendi
@@ -56,6 +57,8 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(UIScreen.main.bounds.height)
+        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
@@ -64,9 +67,6 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         definesPresentationContext = true
         
         prepareTableView()
-        
-        //let orientation = UIInterfaceOrientation.portrait.rawValue
-        //UIDevice.current.setValue(orientation, forKey: "orientation")
         
         let treeModel = TreeModel()
         treeModel.delegate = self
@@ -81,22 +81,16 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         backgroundImage.image = images[number]
         backgroundImage.alpha = CGFloat(0.6)
         
+        
+        //MARK: SwipeDown gesture regognizer
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(openSearchBar))
         swipeDown.direction = .down
-        sliderSearchButton.addGestureRecognizer(swipeDown)
-        sliderSearchLabel.isEnabled = false
+        sliderSearchArea.addGestureRecognizer(swipeDown)
         
     }
     
 
     @objc func openSearchBar(){
-
-        //MARK: Blur Effect If you want to use it
-//        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-//        blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.frame = view.bounds
-//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        self.view.addSubview(blurEffectView)
         
         // Present the view controller
         present(searchController,animated: true, completion: nil)
@@ -124,22 +118,6 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
             destVC.treeList += arrayOfForest
         }
         
-//        if segue.identifier == "selectedTreeSegue" {
-//            if let indexPath = myTableView.indexPathForSelectedRow{
-//                let tree: TreeModel
-//                if isFiltering(){
-//                    tree = filteredTrees[indexPath.row]
-//                }else {
-//                    tree = arrayOfForest[indexPath.row]
-//                }
-//
-//                let nextVC = segue.destination as! SelectedTreeViewController
-//                nextVC.selectedTree = tree
-//
-//            }
-//        }
-        
-
     }
     
     @IBAction func openCameraScreen(_ sender: UIButton) {
@@ -215,10 +193,10 @@ extension MainPageViewController {
     //complition handler ekle animasyon bitince yazı ve ok kaybolmasını sağla
     func slideAnimation(animatedButton item: UIButton){
         
-        let shake = CABasicAnimation(keyPath: "position")
-        shake.duration = 0.7
-        shake.repeatCount = 3
-        shake.autoreverses = true
+        let slide = CABasicAnimation(keyPath: "position")
+        slide.duration = 0.7
+        slide.repeatCount = 3
+        slide.autoreverses = true
         
         let fromPoint = CGPoint(x: item.frame.midX, y: item.frame.midY)
         let fromValue = NSValue(cgPoint: fromPoint)
@@ -226,10 +204,10 @@ extension MainPageViewController {
         let toPoint = CGPoint(x: item.frame.midX, y: item.frame.midY + 7)
         let toValue = NSValue(cgPoint: toPoint)
         
-        shake.fromValue = fromValue
-        shake.toValue = toValue
+        slide.fromValue = fromValue
+        slide.toValue = toValue
         
-        item.layer.add(shake, forKey: "position")
+        item.layer.add(slide, forKey: "position")
 
     }
     
@@ -286,9 +264,6 @@ extension MainPageViewController: UISearchResultsUpdating, UITableViewDelegate, 
         
         cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 16.0)
         cell.textLabel!.text = item.turkish_name
-//        Burasi hata veriyor nedenini arastir
-//        cell.detailTextLabel!.text = item.botanical_prop
-//        cell.detailTextLabel!.textColor = UIColor.lightGray
         return cell
     }
     
@@ -314,7 +289,6 @@ extension MainPageViewController: UISearchResultsUpdating, UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //burasi calismiyor neden bilmiyorum
         let storyBoard  = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "SelectedTreeViewController") as! SelectedTreeViewController
         

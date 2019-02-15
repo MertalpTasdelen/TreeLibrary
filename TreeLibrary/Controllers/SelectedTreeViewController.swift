@@ -36,7 +36,13 @@ class SelectedTreeViewController: UIViewController {
         print("Sharing...")
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .landscapeRight
+    }
     
+    override var shouldAutorotate: Bool {
+        return true
+    }
     
     //if the program download so many data this will clear the cache
     override func didReceiveMemoryWarning() {

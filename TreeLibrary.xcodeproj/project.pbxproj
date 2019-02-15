@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		3581E670E8ED5ECC1C7C02CE /* Pods_TreeLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4D66D1872115EA6BB490D8 /* Pods_TreeLibrary.framework */; };
-		BB38D40D21BC677800A1ED93 /* SelectedAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38D40C21BC677800A1ED93 /* SelectedAnnotationView.swift */; };
+		BB2E436B2216B80B0030094F /* CustomSelectedTreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2E436A2216B80B0030094F /* CustomSelectedTreeViewController.swift */; };
+		BB2E437122177F270030094F /* CustomSelectedTree.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB2E437022177F270030094F /* CustomSelectedTree.xib */; };
 		BB491B0921C56EDA00D0F912 /* CameraConfigurationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB491B0821C56EDA00D0F912 /* CameraConfigurationController.swift */; };
 		BB491B0B21C5D3F100D0F912 /* Inceptionv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BB491B0A21C5D3F100D0F912 /* Inceptionv3.mlmodel */; };
 		BB5B6FF92166B1D600C3B1AD /* SelectedTreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B6FF82166B1D600C3B1AD /* SelectedTreeViewController.swift */; };
 		BB60931121BC3BFF0087BD97 /* SelectedAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB60931021BC3BFF0087BD97 /* SelectedAnnotationViewController.swift */; };
-		BB60931621BC44CD0087BD97 /* SelectedAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB60931521BC44CD0087BD97 /* SelectedAnnotationView.xib */; };
 		BB708F4F211338E3004A79F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB708F4E211338E3004A79F6 /* AppDelegate.swift */; };
 		BB708F51211338E3004A79F6 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB708F50211338E3004A79F6 /* MainPageViewController.swift */; };
 		BB708F54211338E3004A79F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB708F52211338E3004A79F6 /* Main.storyboard */; };
@@ -29,12 +29,12 @@
 
 /* Begin PBXFileReference section */
 		7314C1C4C5C4585B085B3E68 /* Pods-TreeLibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TreeLibrary.release.xcconfig"; path = "Pods/Target Support Files/Pods-TreeLibrary/Pods-TreeLibrary.release.xcconfig"; sourceTree = "<group>"; };
-		BB38D40C21BC677800A1ED93 /* SelectedAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedAnnotationView.swift; sourceTree = "<group>"; };
+		BB2E436A2216B80B0030094F /* CustomSelectedTreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSelectedTreeViewController.swift; sourceTree = "<group>"; };
+		BB2E437022177F270030094F /* CustomSelectedTree.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomSelectedTree.xib; sourceTree = "<group>"; };
 		BB491B0821C56EDA00D0F912 /* CameraConfigurationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraConfigurationController.swift; sourceTree = "<group>"; };
 		BB491B0A21C5D3F100D0F912 /* Inceptionv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Inceptionv3.mlmodel; sourceTree = "<group>"; };
 		BB5B6FF82166B1D600C3B1AD /* SelectedTreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTreeViewController.swift; sourceTree = "<group>"; };
 		BB60931021BC3BFF0087BD97 /* SelectedAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedAnnotationViewController.swift; sourceTree = "<group>"; };
-		BB60931521BC44CD0087BD97 /* SelectedAnnotationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SelectedAnnotationView.xib; path = "TreeLibrary/Views/Custom Views/SelectedAnnotationView.xib"; sourceTree = SOURCE_ROOT; };
 		BB708F4B211338E3004A79F6 /* TreeLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TreeLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB708F4E211338E3004A79F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB708F50211338E3004A79F6 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
@@ -84,8 +84,8 @@
 		BB60931221BC41740087BD97 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				BB38D40C21BC677800A1ED93 /* SelectedAnnotationView.swift */,
-				BB60931521BC44CD0087BD97 /* SelectedAnnotationView.xib */,
+				BB2E436A2216B80B0030094F /* CustomSelectedTreeViewController.swift */,
+				BB2E437022177F270030094F /* CustomSelectedTree.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -219,8 +219,8 @@
 			files = (
 				BB708F59211338E4004A79F6 /* LaunchScreen.storyboard in Resources */,
 				BB708F56211338E4004A79F6 /* Assets.xcassets in Resources */,
-				BB60931621BC44CD0087BD97 /* SelectedAnnotationView.xib in Resources */,
 				BB708F54211338E3004A79F6 /* Main.storyboard in Resources */,
+				BB2E437122177F270030094F /* CustomSelectedTree.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,13 +274,13 @@
 				BB708F51211338E3004A79F6 /* MainPageViewController.swift in Sources */,
 				BB491B0B21C5D3F100D0F912 /* Inceptionv3.mlmodel in Sources */,
 				BBF6062E2142CC9C00C940F7 /* TreeModel.swift in Sources */,
-				BB38D40D21BC677800A1ED93 /* SelectedAnnotationView.swift in Sources */,
 				BB708F4F211338E3004A79F6 /* AppDelegate.swift in Sources */,
 				BB948EDD2143BD7E007E9568 /* BookViewController.swift in Sources */,
 				BBCA14AD218105E200594ABE /* TreeAnnotation.swift in Sources */,
 				BB60931121BC3BFF0087BD97 /* SelectedAnnotationViewController.swift in Sources */,
 				BB948EDA2143BD15007E9568 /* MapViewController.swift in Sources */,
 				BB491B0921C56EDA00D0F912 /* CameraConfigurationController.swift in Sources */,
+				BB2E436B2216B80B0030094F /* CustomSelectedTreeViewController.swift in Sources */,
 				BBE060B02119C25300A52347 /* CameraViewController.swift in Sources */,
 				BB5B6FF92166B1D600C3B1AD /* SelectedTreeViewController.swift in Sources */,
 			);

@@ -11,52 +11,50 @@ import UIKit
 
 class SelectedAnnotationViewController:UIViewController {
     
-    let newPage = Bundle.main.loadNibNamed("SelectedAnnotationView", owner: self, options: nil)?.first as? SelectedAnnotationView
-
     let fullView: CGFloat = 90
-    var partialView: CGFloat{
-        let returnVal = (UIScreen.main.bounds.height)-((newPage?.latinNameTextField.frame.maxY)! + UIApplication.shared.statusBarFrame.height)
-        return returnVal
-    }
+//    var partialView: CGFloat{
+//        let returnVal = (UIScreen.main.bounds.height)-((newPage?.latinNameTextField.frame.maxY)! + UIApplication.shared.statusBarFrame.height)
+//        return returnVal
+//    }
     
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(newPage!)
+
         
         prepareBackgroundView()
     
-        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(SelectedAnnotationViewController.panGesture))
-        view.addGestureRecognizer(gesture)
+//        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(SelectedAnnotationViewController.panGesture))
+//        view.addGestureRecognizer(gesture)
         
         
         
-        roundViews()
+//        roundViews()
     }
     
-    @objc func panGesture(recognizer: UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: self.view)
-        let velocity = recognizer.velocity(in: self.view)
-        let y = self.view.frame.minY
-        self.view.frame = CGRect(x:0, y:y + translation.y, width:view.frame.width, height:view.frame.height)
-        recognizer.setTranslation(CGPoint.zero, in: self.view)
-        
-        if recognizer.state == .ended {
-        var duration =  velocity.y < 0 ? Double((y - fullView) / -velocity.y) : Double((partialView - y) / velocity.y )
-            
-            duration = duration > 1.3 ? 1 : duration
-            
-            UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
-                if  velocity.y >= 0 {
-                    self.view.frame = CGRect(x: 0, y: self.partialView, width: self.view.frame.width, height: self.view.frame.height)
-                } else {
-                    self.view.frame = CGRect(x: 0, y: self.fullView, width: self.view.frame.width, height: self.view.frame.height)
-                }
-                
-            }, completion: nil)
-        }
-    }
+//    @objc func panGesture(recognizer: UIPanGestureRecognizer) {
+//        let translation = recognizer.translation(in: self.view)
+//        let velocity = recognizer.velocity(in: self.view)
+//        let y = self.view.frame.minY
+//        self.view.frame = CGRect(x:0, y:y + translation.y, width:view.frame.width, height:view.frame.height)
+//        recognizer.setTranslation(CGPoint.zero, in: self.view)
+//
+//        if recognizer.state == .ended {
+//        var duration =  velocity.y < 0 ? Double((y - fullView) / -velocity.y) : Double((partialView - y) / velocity.y )
+//
+//            duration = duration > 1.3 ? 1 : duration
+//
+//            UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
+//                if  velocity.y >= 0 {
+//                    self.view.frame = CGRect(x: 0, y: self.partialView, width: self.view.frame.width, height: self.view.frame.height)
+//                } else {
+//                    self.view.frame = CGRect(x: 0, y: self.fullView, width: self.view.frame.width, height: self.view.frame.height)
+//                }
+//
+//            }, completion: nil)
+//        }
+//    }
     
     func prepareBackgroundView(){
         let blurEffect = UIBlurEffect.init(style: .dark)
@@ -88,7 +86,7 @@ class SelectedAnnotationViewController:UIViewController {
     
     func roundViews(){
         view.layer.cornerRadius = 5
-        newPage?.holder.layer.cornerRadius = 3
+//        newPage?.holder.layer.cornerRadius = 3
     }
 }
 

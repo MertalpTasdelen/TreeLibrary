@@ -27,7 +27,7 @@ class MapViewController: UIViewController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscapeRight
+        return .portrait
     }
     
     override var shouldAutorotate: Bool {

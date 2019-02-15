@@ -11,23 +11,33 @@ import AVFoundation
 import CoreML
 import Vision
 import Photos
-import FloatingPanel
 
-class CameraViewController: UIViewController, FloatingPanelControllerDelegate {
+class CameraViewController: UIViewController {
     
     var searchedTreeVC: SelectedTreeViewController!
-    var fpc: FloatingPanelController!
     var treeList = [TreeModel]()
     let cameraController = CameraConfigurationController()
     var searchedTreeLatinName = ""
-    
-    
+    var topPadding: CGFloat = 0.0
+    var blurEffectView = UIVisualEffectView()
+
+    @IBOutlet weak var topButtonArea: UIView!
+    @IBOutlet weak var searchedTreeView: CustomSelectedTreeViewController!
     @IBOutlet var capturePreviewView: UIView!
     @IBOutlet weak var toogleFlashButton: UIButton!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var cameraScreen: UIImageView!
+    
     @IBAction func goBack(_ sender: Any) {
-       dismiss(animated: true, completion: nil) // düzgün şekilde olması için comletion kısmını doldurman gerek bence araştır
+       dismiss(animated: true, completion: nil)
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    override var shouldAutorotate: Bool {
+        return true
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -52,43 +62,41 @@ extension CameraViewController {
         }
     }
     
+    //MARK: Burada foto cekme yeni sayfa acma ve tanima islemleri yapiliyor
     @IBAction func captureImage(_ sender: Any) {
+        
+        if #available(iOS 11, *) {
+            let window = UIApplication.shared.keyWindow
+            topPadding = window?.safeAreaInsets.top ?? 0.0
+        }
+        
         flash()
+        
         cameraController.captureImage {(image, error) in
             guard let image = image else {
                 print(error ?? "Image capture error")
                 return
             }
             self.cameraScreen.image = image
+            
             guard let ciImage = CIImage(image: image) else {
                 fatalError("Could not conver to CIImage")
             }
             self.detect(image: ciImage)
             self.cameraScreen.isHidden = false
-            
-            // Initialize a `FloatingPanelController` object.
-            self.fpc = FloatingPanelController()
-           //Assign self as the delegate of the controller
-            self.fpc.delegate = self//Optional
-          
-           // Initialize FloatingPanelController and add the view
-            self.fpc.surfaceView.backgroundColor = .clear
-            self.fpc.surfaceView.cornerRadius = 9.0
-            self.fpc.surfaceView.shadowHidden = false
-          
-           //Set a content view controller
-            self.fpc.set(contentViewController: self.searchedTreeVC)
-            self.fpc.isRemovalInteractionEnabled = true
-         
-           // Track a scroll view(or the siblings) in the content view controller.
-            self.fpc.track(scrollView: self.searchedTreeVC.scrollView) //HATA VERİYOR
-           
-            self.fpc.addPanel(toParent: self)
-            
+
             try? PHPhotoLibrary.shared().performChangesAndWait {
                 PHAssetChangeRequest.creationRequestForAsset(from: image)
             }
         }
+        
+        
+//MARK: Blur Effect If you want to use it
+//        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+//        blurEffectView = UIVisualEffectView(effect: blurEffect)
+//        blurEffectView.frame = view.bounds
+//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        self.view.addSubview(blurEffectView)
         
 
     }
@@ -105,7 +113,7 @@ extension CameraViewController {
                 fatalError("Model Failed to process Image")
             }
             
-            self.searchedTreeLatinName = results.first?.identifier as! String
+            self.searchedTreeLatinName = results.first?.identifier ?? "Lorem Implus"
         }
         
         let handler = VNImageRequestHandler(ciImage: image)
@@ -120,9 +128,12 @@ extension CameraViewController {
         
         // TO DO : burada bir sıkıntı olabilir tekrar dön buraya
         let searchedTree = self.treeList.first{ $0.latin_name == searchedTreeLatinName}
+        prepareCustomSelectedTreeViewController(capturedTree: searchedTree!)
         
         if let unwrappedTreeName = searchedTree?.turkish_name {
             print(unwrappedTreeName)
+            
+            
         } else{
             print("Eroro while printing treeName")
         }
@@ -130,7 +141,7 @@ extension CameraViewController {
     }
     
     func didPressTakeAnother() {
-        
+
         if cameraScreen.isHidden == false {
             
             cameraScreen.isHidden = true
@@ -148,7 +159,15 @@ extension CameraViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        print(UIScreen.main.bounds.height)
+        print(self.searchedTreeView.partialView)
+        print(self.searchedTreeView.rootView.frame.height)
+        print((UIScreen.main.bounds.height)-(UIApplication.shared.statusBarFrame.height + 76))
+        
+        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
+        searchedTreeView.swipeButton.addGestureRecognizer(gesture)
+
         cameraScreen.isHidden = true
         func configureCameraViewController(){
             cameraController.prepare { (error) in
@@ -171,65 +190,16 @@ extension CameraViewController {
         configureCameraViewController()
         
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        // Remove the views managed by the `FloatingPanelController` object from self.view.
-//        fpc.removePanelFromParent(animated: true)
-//    }
-    
-    // MARK: FloatingPanelControllerDelegate
-    
-    func floatingPanel(_ vc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout? {
-        switch newCollection.verticalSizeClass {
-        case .compact:
-            fpc.surfaceView.borderWidth = 1.0 / traitCollection.displayScale
-            fpc.surfaceView.borderColor = UIColor.black.withAlphaComponent(0.2)
-            return SelectedPanelLandscapeLayout()
-        default:
-            fpc.surfaceView.borderWidth = 0.0
-            fpc.surfaceView.backgroundColor = nil
-            return nil
-        }
-    }
-    
-    func floatingPanelDidMove(_ vc: FloatingPanelController) {
-        let y = vc.surfaceView.frame.origin.y
-        let tipY = vc.originYOfSurface(for: .tip)
-        if y > tipY - 44.0 {
-            let progress = max(0.0, min((tipY  - y) / 44.0, 1.0))
-            self.searchedTreeVC.scrollView.alpha = progress
-        }
-    }
-    
-    func floatingPanelWillBeginDragging(_ vc: FloatingPanelController) {
-        if vc.position == .full {
-            print("Babacım burası ne yapıyor anlamadım valla...")
-        }
-    }
-    
-    func floatingPanelDidEndDragging(_ vc: FloatingPanelController, withVelocity velocity: CGPoint, targetPosition: FloatingPanelPosition) {
-        
-        UIView.animate(withDuration: 0.25,
-                       delay: 0.0,
-                       options: .allowUserInteraction,
-                       animations: {
-                        if targetPosition == .tip {
-                            self.searchedTreeVC.scrollView.alpha = 0.0
-                        } else {
-                            self.searchedTreeVC.scrollView.alpha = 1.0
-                        }
-        }, completion: nil)
-    }
-    
+  
 }
 
-// MARK: Button Animations
+// MARK: Buttons and Views Animations
+
 extension CameraViewController{
+    
     func flash(){
         let animation = CABasicAnimation(keyPath: "opacity")
-        animation.duration = 0.5
+        animation.duration = 0.2
         animation.fromValue = 1
         animation.toValue = 0.2
         animation.timingFunction = CAMediaTimingFunction(name:.easeInEaseOut)
@@ -238,48 +208,51 @@ extension CameraViewController{
         
         captureButton.layer.add(animation, forKey: nil)
     }
-}
-
-// MARK: SelectedTreePanelClass
-
-public class SelectedPanelLandscapeLayout: FloatingPanelLayout {
-    public func insetFor(position: FloatingPanelPosition) -> CGFloat? {
-        switch position {
-        case .full:
-            return 16.0
-        case .tip:
-            return 69.0
-        default:
-            return nil
+    
+    //        searchedTreeView.frame = CGRect(x: 0, y: topButtonArea.frame.height + topPadding ,width: self.view.frame.maxX, height: self.view.frame.maxY)
+    func slide(){
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.transitionCurlUp],
+                       animations: {
+                        self.searchedTreeView.frame = CGRect(x: 0, y: self.topButtonArea.frame.height + self.topPadding ,width: self.view.frame.maxX, height: self.view.frame.maxY)
+                        self.searchedTreeView.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    
+    @objc func panGesture(recognizer: UIPanGestureRecognizer) {
+        
+        let translation = recognizer.translation(in: searchedTreeView)
+        let velocity = recognizer.velocity(in: searchedTreeView) //velocityDirection is more sense for better understanding
+        
+        let y = searchedTreeView.frame.minY
+        searchedTreeView.frame = CGRect(x:0, y:y + translation.y, width:searchedTreeView.frame.width, height:searchedTreeView.frame.height)
+        recognizer.setTranslation(CGPoint.zero, in: searchedTreeView)
+        
+        if recognizer.state == .ended {
+            var duration =  velocity.y < 0 ? Double((y - searchedTreeView.fullView) / -velocity.y) : Double((searchedTreeView.partialView - y) / velocity.y )
+            
+            duration = duration > 1.3 ? 1 : duration
+            
+            UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
+                if  velocity.y >= 0 {
+                    self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.partialView , width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
+                    
+                } else {
+                    self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.fullView, width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
+                    self.blurEffectView.removeFromSuperview()
+                }
+                
+            }, completion: nil)
         }
     }
     
-    public var initialPosition: FloatingPanelPosition{
-        return .tip
-    }
-    
-    public var supportedPositions: Set<FloatingPanelPosition> {
-        return [.full, .tip]
-    }
-    
-    public func prepareLayout(surfaceView: UIView, in view: UIView) -> [NSLayoutConstraint] {
-        if #available(iOS 11.0, *){
-            return [
-                surfaceView.leftAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8.0),
-                surfaceView.widthAnchor.constraint(equalToConstant: 291),
-            ]
-        } else {
-            return [
-                surfaceView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8.0),
-                surfaceView.widthAnchor.constraint(equalToConstant: 291),
-            ]
-        }
-    }
-    
-    public func backdropAlphaFor(position: FloatingPanelPosition) -> CGFloat {
-        return 0.0
-    }
 }
 
+extension CameraViewController {
+    func prepareCustomSelectedTreeViewController(capturedTree tree: TreeModel) {
+        searchedTreeView.treeTurkishName.text = tree.turkish_name
+//        print(tree.spreading_area)
+    }
 
+}
 
