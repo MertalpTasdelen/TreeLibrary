@@ -206,6 +206,7 @@
                                     <constraint firstAttribute="height" constant="33" id="9t7-IT-bb2"/>
                                     <constraint firstAttribute="width" constant="20" id="iaE-mG-jJg"/>
                                 </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="Back-1"/>
                                 <connections>
                                     <action selector="backToMainPage:" destination="SLW-9S-Bhi" eventType="touchUpInside" id="Iuv-SC-HuB"/>
@@ -573,10 +574,13 @@
                                     <constraint firstItem="x6C-aK-B0S" firstAttribute="top" secondItem="Uqi-r8-k8O" secondAttribute="top" constant="14" id="nnZ-Fs-ddf"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6O-eP-Nbd">
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6O-eP-Nbd">
                                 <rect key="frame" x="147.66666666666666" y="622" width="80" height="80"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.68888300657272339" green="0.71366006135940552" blue="0.73448425531387329" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="6Qm-Aa-U5g"/>
+                                    <constraint firstAttribute="width" constant="80" id="zIN-cw-Aru"/>
+                                </constraints>
                                 <connections>
                                     <action selector="captureImage:" destination="Rbx-8U-bPg" eventType="touchUpInside" id="jao-BV-3Vk"/>
                                 </connections>
@@ -590,6 +594,8 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="Uqi-r8-k8O" firstAttribute="trailing" secondItem="7zd-BP-1Ag" secondAttribute="trailing" id="2uC-6q-xlm"/>
+                            <constraint firstItem="gli-yi-h8Q" firstAttribute="top" secondItem="D6O-eP-Nbd" secondAttribute="bottom" constant="50" id="3fI-b1-cu4"/>
+                            <constraint firstItem="D6O-eP-Nbd" firstAttribute="centerX" secondItem="VeA-7T-kFc" secondAttribute="centerX" id="3zl-jl-D8F"/>
                             <constraint firstAttribute="bottom" secondItem="gli-yi-h8Q" secondAttribute="bottom" id="Ovo-bU-Ei0"/>
                             <constraint firstAttribute="bottom" secondItem="aPR-1T-7sg" secondAttribute="bottom" id="Xsz-uN-cKd"/>
                             <constraint firstItem="Uqi-r8-k8O" firstAttribute="top" secondItem="7zd-BP-1Ag" secondAttribute="top" id="Ytu-Kf-xBs"/>

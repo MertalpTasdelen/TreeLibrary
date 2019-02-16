@@ -160,7 +160,6 @@ extension CameraViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(UIScreen.main.bounds.height)
         print(self.searchedTreeView.partialView)
         print(self.searchedTreeView.rootView.frame.height)
         print((UIScreen.main.bounds.height)-(UIApplication.shared.statusBarFrame.height + 76))
@@ -209,9 +208,8 @@ extension CameraViewController{
         captureButton.layer.add(animation, forKey: nil)
     }
     
-    //        searchedTreeView.frame = CGRect(x: 0, y: topButtonArea.frame.height + topPadding ,width: self.view.frame.maxX, height: self.view.frame.maxY)
     func slide(){
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.transitionCurlUp],
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.transitionCurlUp],
                        animations: {
                         self.searchedTreeView.frame = CGRect(x: 0, y: self.topButtonArea.frame.height + self.topPadding ,width: self.view.frame.maxX, height: self.view.frame.maxY)
                         self.searchedTreeView.layoutIfNeeded()
@@ -235,7 +233,7 @@ extension CameraViewController{
             
             UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
                 if  velocity.y >= 0 {
-                    self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.partialView , width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
+                    self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.partialView - 16, width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
                     
                 } else {
                     self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.fullView, width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
@@ -251,7 +249,10 @@ extension CameraViewController{
 extension CameraViewController {
     func prepareCustomSelectedTreeViewController(capturedTree tree: TreeModel) {
         searchedTreeView.treeTurkishName.text = tree.turkish_name
-//        print(tree.spreading_area)
+        searchedTreeView.leafType.text = tree.leaf_type
+        searchedTreeView.seedType.text = tree.seed_type
+        searchedTreeView.bothanicalProp.text = tree.botanical_prop
+        
     }
 
 }
