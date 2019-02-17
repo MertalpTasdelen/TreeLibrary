@@ -19,7 +19,9 @@ class CameraViewController: UIViewController {
     let cameraController = CameraConfigurationController()
     var searchedTreeLatinName = ""
     var topPadding: CGFloat = 0.0
-    var blurEffectView = UIVisualEffectView()
+    var effect: UIVisualEffect!
+    var hostUrl = ""
+//    var blurEffectView = UIVisualEffectView()
 
     @IBOutlet weak var topButtonArea: UIView!
     @IBOutlet weak var searchedTreeView: CustomSelectedTreeViewController!
@@ -27,6 +29,7 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var toogleFlashButton: UIButton!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var cameraScreen: UIImageView!
+    @IBOutlet weak var blurEffectView: UIVisualEffectView!
     
     @IBAction func goBack(_ sender: Any) {
        dismiss(animated: true, completion: nil)
@@ -72,23 +75,23 @@ extension CameraViewController {
         
         flash()
         
-//        cameraController.captureImage {(image, error) in
-//            guard let image = image else {
-//                print(error ?? "Image capture error")
-//                return
-//            }
-//            self.cameraScreen.image = image
-//
-//            guard let ciImage = CIImage(image: image) else {
-//                fatalError("Could not conver to CIImage")
-//            }
-//            self.detect(image: ciImage)
-//            self.cameraScreen.isHidden = false
-//
+        cameraController.captureImage {(image, error) in
+            guard let image = image else {
+                print(error ?? "Image capture error")
+                return
+            }
+            self.cameraScreen.image = image
+
+            guard let ciImage = CIImage(image: image) else {
+                fatalError("Could not conver to CIImage")
+            }
+            self.detect(image: ciImage)
+            self.cameraScreen.isHidden = false
+
 //            try? PHPhotoLibrary.shared().performChangesAndWait {
 //                PHAssetChangeRequest.creationRequestForAsset(from: image)
 //            }
-//        }
+        }
         
         slide()
 
@@ -122,11 +125,9 @@ extension CameraViewController {
         // TO DO : burada bir sıkıntı olabilir tekrar dön buraya
         let searchedTree = self.treeList.first{ $0.latin_name == searchedTreeLatinName}
         prepareCustomSelectedTreeViewController(capturedTree: searchedTree!)
-        
+        downloadCapturedTreeImage(selectedTree: searchedTree?.latin_name ?? "Lorem Implus")
         if let unwrappedTreeName = searchedTree?.turkish_name {
             print(unwrappedTreeName)
-            
-            
         } else{
             print("Eroro while printing treeName")
         }
@@ -153,9 +154,9 @@ extension CameraViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(self.searchedTreeView.partialView)
-        print(self.searchedTreeView.rootView.frame.height)
-        print((UIScreen.main.bounds.height)-(UIApplication.shared.statusBarFrame.height + 76))
+        effect = blurEffectView.effect
+        
+        blurEffectView.effect = nil
         
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
         searchedTreeView.swipeButton.addGestureRecognizer(gesture)
@@ -166,16 +167,9 @@ extension CameraViewController {
                 if let error = error {
                     print(error)
                 }
-                
+
                 try? self.cameraController.displayPreview(on: self.capturePreviewView)
             }
-        }
-        
-        func styleCaptureButton(){
-            captureButton.layer.borderColor = UIColor.darkGray.cgColor
-            captureButton.layer.borderWidth = 7
-            
-            captureButton.layer.cornerRadius = min(captureButton.frame.width,captureButton.frame.height) / 2
         }
         
         styleCaptureButton()
@@ -206,18 +200,31 @@ extension CameraViewController{
                        animations: {
                         self.searchedTreeView.frame = CGRect(x: 0, y: self.topButtonArea.frame.height + self.topPadding ,width: self.view.frame.maxX, height: self.view.frame.maxY)
                         self.searchedTreeView.layoutIfNeeded()
+                        print(self.searchedTreeView.fullView)
                         self.performBlurEffect()
         }, completion: nil)
     }
     
+    func styleCaptureButton(){
+        captureButton.layer.borderColor = UIColor.darkGray.cgColor
+        captureButton.layer.borderWidth = 7
+        captureButton.layer.cornerRadius = min(captureButton.frame.width,captureButton.frame.height) / 2
+    }
     
+    //MARK: Blur effect is hard to implement
     fileprivate func performBlurEffect() {
-        //MARK: Blur effect is hard to implement
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-        self.blurEffectView = UIVisualEffectView(effect: blurEffect)
-        self.blurEffectView.frame = self.view.bounds
-        self.blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.capturePreviewView.insertSubview(self.blurEffectView, at: 1)
+    
+        if searchedTreeView.frame.origin.y == searchedTreeView.fullView {
+            blurEffectView.effect = effect
+            topButtonArea.isUserInteractionEnabled = false
+        }else {
+            self.blurEffectView.effect = nil
+            topButtonArea.isUserInteractionEnabled = true
+        }
+        
+        
+       
+
     }
     
     @objc func panGesture(recognizer: UIPanGestureRecognizer) {
@@ -237,8 +244,9 @@ extension CameraViewController{
             UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
                 if  velocity.y >= 0 {
                     self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.partialView - 16, width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
-                    self.blurEffectView.removeFromSuperview()
+                    self.performBlurEffect()
                 } else {
+                    //ekranin yukari kalkmasi
                     self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.fullView, width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
                     self.performBlurEffect()
                 }
@@ -250,10 +258,44 @@ extension CameraViewController{
 }
 
 extension CameraViewController {
+    
+    func downloadCapturedTreeImage(selectedTree: String){
+        let hostUrl = selectedTree.replacingOccurrences(of: " ", with: "-")
+        let treeUrl = URL(string: searchedTreeView.rootUrl + hostUrl + searchedTreeView.treeEndPointUrl)!
+        print(treeUrl)
+        let defaultSession  = URLSession(configuration: URLSessionConfiguration.default)
+        
+        let treeImage = defaultSession.dataTask(with: treeUrl) { (data, responso, error) in
+            if error != nil {
+                print(error!)
+            }else {
+                print("Foto geldi olley be")
+                let treeImage = UIImage(data: data!)
+                
+                DispatchQueue.main.async {
+                    self.searchedTreeView.treeImage.image = treeImage
+                }
+            }
+        }
+        treeImage.resume()
+    }
+    
     func prepareCustomSelectedTreeViewController(capturedTree tree: TreeModel) {
+        
+        if tree.seed_type == "1" {
+            searchedTreeView.seedType.text = "Açık Tohum"
+        } else {
+            searchedTreeView.seedType.text = "Kapalı Tohum"
+        }
+        
+        if tree.leaf_type == "1" {
+            searchedTreeView.leafType.text = "İğne Yaprak"
+        } else {
+             searchedTreeView.leafType.text = "Kapalı Yaprak"
+        }
+        
+        
         searchedTreeView.treeTurkishName.text = tree.turkish_name
-        searchedTreeView.leafType.text = tree.leaf_type
-        searchedTreeView.seedType.text = tree.seed_type
         searchedTreeView.bothanicalProp.text = tree.botanical_prop
         
     }
