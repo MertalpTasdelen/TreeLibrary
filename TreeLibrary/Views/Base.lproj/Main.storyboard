@@ -537,9 +537,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aPR-1T-7sg" userLabel="CameraScreen">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uqi-r8-k8O" userLabel="ButtonArea">
                                 <rect key="frame" x="0.0" y="44" width="375" height="76"/>
                                 <subviews>
@@ -591,6 +588,9 @@
                                     <constraint firstAttribute="height" constant="60" id="45K-k0-wp0"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aPR-1T-7sg" userLabel="CameraScreen">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                            </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Uqi-r8-k8O" firstAttribute="trailing" secondItem="7zd-BP-1Ag" secondAttribute="trailing" id="2uC-6q-xlm"/>

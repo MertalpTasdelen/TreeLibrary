@@ -72,32 +72,25 @@ extension CameraViewController {
         
         flash()
         
-        cameraController.captureImage {(image, error) in
-            guard let image = image else {
-                print(error ?? "Image capture error")
-                return
-            }
-            self.cameraScreen.image = image
-            
-            guard let ciImage = CIImage(image: image) else {
-                fatalError("Could not conver to CIImage")
-            }
-            self.detect(image: ciImage)
-            self.cameraScreen.isHidden = false
-
-            try? PHPhotoLibrary.shared().performChangesAndWait {
-                PHAssetChangeRequest.creationRequestForAsset(from: image)
-            }
-        }
+//        cameraController.captureImage {(image, error) in
+//            guard let image = image else {
+//                print(error ?? "Image capture error")
+//                return
+//            }
+//            self.cameraScreen.image = image
+//
+//            guard let ciImage = CIImage(image: image) else {
+//                fatalError("Could not conver to CIImage")
+//            }
+//            self.detect(image: ciImage)
+//            self.cameraScreen.isHidden = false
+//
+//            try? PHPhotoLibrary.shared().performChangesAndWait {
+//                PHAssetChangeRequest.creationRequestForAsset(from: image)
+//            }
+//        }
         
-        
-//MARK: Blur Effect If you want to use it
-//        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-//        blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.frame = view.bounds
-//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        self.view.addSubview(blurEffectView)
-        
+        slide()
 
     }
     
@@ -213,9 +206,19 @@ extension CameraViewController{
                        animations: {
                         self.searchedTreeView.frame = CGRect(x: 0, y: self.topButtonArea.frame.height + self.topPadding ,width: self.view.frame.maxX, height: self.view.frame.maxY)
                         self.searchedTreeView.layoutIfNeeded()
+                        self.performBlurEffect()
         }, completion: nil)
     }
     
+    
+    fileprivate func performBlurEffect() {
+        //MARK: Blur effect is hard to implement
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        self.blurEffectView = UIVisualEffectView(effect: blurEffect)
+        self.blurEffectView.frame = self.view.bounds
+        self.blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.capturePreviewView.insertSubview(self.blurEffectView, at: 1)
+    }
     
     @objc func panGesture(recognizer: UIPanGestureRecognizer) {
         
@@ -234,10 +237,10 @@ extension CameraViewController{
             UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
                 if  velocity.y >= 0 {
                     self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.partialView - 16, width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
-                    
+                    self.blurEffectView.removeFromSuperview()
                 } else {
                     self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.fullView, width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
-                    self.blurEffectView.removeFromSuperview()
+                    self.performBlurEffect()
                 }
                 
             }, completion: nil)

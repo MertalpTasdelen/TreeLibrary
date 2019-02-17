@@ -26,8 +26,7 @@ class CustomSelectedTreeViewController: UIView {
         let returnVal = (UIScreen.main.bounds.height)-(UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 60)
             return returnVal
     }
-    
-    
+        
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
