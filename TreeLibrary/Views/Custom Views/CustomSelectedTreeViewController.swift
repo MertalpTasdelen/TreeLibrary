@@ -23,9 +23,11 @@ class CustomSelectedTreeViewController: UIView {
     @IBOutlet weak var treeImage: UIImageView!
     @IBOutlet weak var bothanicalProp: UITextView!
     
+    //bu deger ise yukari kalkan goruntunun boyutu
     let fullView: CGFloat = UIApplication.shared.statusBarFrame.height + 76
+    //baslangicda alt konumda dururkenki view boyutu
     var partialView: CGFloat{
-        let returnVal = (UIScreen.main.bounds.height)-(UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 60)
+        let returnVal = (UIScreen.main.bounds.height)-( 60) //UIApplication.shared.keyWindow?.safeAreaInsets.top ??
             return returnVal
     }
         

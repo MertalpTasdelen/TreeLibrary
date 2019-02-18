@@ -122,7 +122,6 @@ extension CameraViewController {
             print(error)
         }
         
-        // TO DO : burada bir sıkıntı olabilir tekrar dön buraya
         let searchedTree = self.treeList.first{ $0.latin_name == searchedTreeLatinName}
         prepareCustomSelectedTreeViewController(capturedTree: searchedTree!)
         downloadCapturedTreeImage(selectedTree: searchedTree?.latin_name ?? "Lorem Implus")
@@ -154,8 +153,11 @@ extension CameraViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        effect = blurEffectView.effect
+        print(searchedTreeView.partialView)
+        print(UIScreen.main.bounds.height)
+        print(searchedTreeView.frame.height)
         
+        effect = blurEffectView.effect
         blurEffectView.effect = nil
         
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
@@ -217,13 +219,12 @@ extension CameraViewController{
         if searchedTreeView.frame.origin.y == searchedTreeView.fullView {
             blurEffectView.effect = effect
             topButtonArea.isUserInteractionEnabled = false
+            cameraScreen.isUserInteractionEnabled = false
         }else {
             self.blurEffectView.effect = nil
             topButtonArea.isUserInteractionEnabled = true
+            cameraScreen.isUserInteractionEnabled = true
         }
-        
-        
-       
 
     }
     
@@ -243,7 +244,7 @@ extension CameraViewController{
             
             UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
                 if  velocity.y >= 0 {
-                    self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.partialView - 16, width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
+                    self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.partialView, width: self.searchedTreeView.frame.width, height:  self.searchedTreeView.frame.height) //
                     self.performBlurEffect()
                 } else {
                     //ekranin yukari kalkmasi
