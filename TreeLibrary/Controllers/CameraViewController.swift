@@ -74,26 +74,28 @@ extension CameraViewController {
         }
         
         flash()
-        
-        cameraController.captureImage {(image, error) in
-            guard let image = image else {
-                print(error ?? "Image capture error")
-                return
+        DispatchQueue.main.async {
+            self.cameraController.captureImage {(image, error) in
+                guard let image = image else {
+                    print(error ?? "Image capture error")
+                    return
+                }
+                self.cameraScreen.image = image
+                
+                guard let ciImage = CIImage(image: image) else {
+                    fatalError("Could not conver to CIImage")
+                }
+                self.detect(image: ciImage)
+                self.cameraScreen.isHidden = false
+                
+                //            try? PHPhotoLibrary.shared().performChangesAndWait {
+                //                PHAssetChangeRequest.creationRequestForAsset(from: image)
+                //            }
             }
-            self.cameraScreen.image = image
-
-            guard let ciImage = CIImage(image: image) else {
-                fatalError("Could not conver to CIImage")
-            }
-            self.detect(image: ciImage)
-            self.cameraScreen.isHidden = false
-
-//            try? PHPhotoLibrary.shared().performChangesAndWait {
-//                PHAssetChangeRequest.creationRequestForAsset(from: image)
-//            }
         }
-        
+
         slide()
+        
 
     }
     
@@ -110,6 +112,8 @@ extension CameraViewController {
             }
             
             self.searchedTreeLatinName = results.first?.identifier ?? "Lorem Implus"
+            
+//            print(results.first?.confidence ?? "Olmadi be")
         }
         
         let handler = VNImageRequestHandler(ciImage: image)
@@ -134,14 +138,10 @@ extension CameraViewController {
     }
     
     func didPressTakeAnother() {
-
         if cameraScreen.isHidden == false {
-            
             cameraScreen.isHidden = true
-            
         } else {
             cameraController.captureSession?.startRunning()
-            
         }
     }
     
