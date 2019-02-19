@@ -27,7 +27,7 @@ class CustomSelectedTreeViewController: UIView {
     let fullView: CGFloat = UIApplication.shared.statusBarFrame.height + 76
     //baslangicda alt konumda dururkenki view boyutu
     var partialView: CGFloat{
-        let returnVal = (UIScreen.main.bounds.height)-( 60) //UIApplication.shared.keyWindow?.safeAreaInsets.top ??
+        let returnVal = (UIScreen.main.bounds.height)-(60) //UIApplication.shared.keyWindow?.safeAreaInsets.top ??
             return returnVal
     }
         

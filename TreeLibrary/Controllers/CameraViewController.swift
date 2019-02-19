@@ -48,7 +48,9 @@ class CameraViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        didPressTakeAnother()
+        if searchedTreeView.frame.origin.y != searchedTreeView.fullView {
+            didPressTakeAnother()
+        }
     }
 }
 
@@ -74,28 +76,24 @@ extension CameraViewController {
         }
         
         flash()
-        DispatchQueue.main.async {
-            self.cameraController.captureImage {(image, error) in
-                guard let image = image else {
-                    print(error ?? "Image capture error")
-                    return
-                }
-                self.cameraScreen.image = image
-                
-                guard let ciImage = CIImage(image: image) else {
-                    fatalError("Could not conver to CIImage")
-                }
-                self.detect(image: ciImage)
-                self.cameraScreen.isHidden = false
-                
-                //            try? PHPhotoLibrary.shared().performChangesAndWait {
-                //                PHAssetChangeRequest.creationRequestForAsset(from: image)
-                //            }
+        cameraController.captureImage {(image, error) in
+            guard let image = image else {
+                print(error ?? "Image capture error")
+                return
             }
-        }
-
-        slide()
-        
+            self.cameraScreen.image = image
+                
+            guard let ciImage = CIImage(image: image) else {
+                fatalError("Could not conver to CIImage")
+            }
+            self.detect(image: ciImage)
+            self.cameraScreen.isHidden = false
+                
+            //            try? PHPhotoLibrary.shared().performChangesAndWait {
+            //                PHAssetChangeRequest.creationRequestForAsset(from: image)
+            //            }
+            }
+    
 
     }
     
@@ -129,6 +127,7 @@ extension CameraViewController {
         let searchedTree = self.treeList.first{ $0.latin_name == searchedTreeLatinName}
         prepareCustomSelectedTreeViewController(capturedTree: searchedTree!)
         downloadCapturedTreeImage(selectedTree: searchedTree?.latin_name ?? "Lorem Implus")
+        slide()
         if let unwrappedTreeName = searchedTree?.turkish_name {
             print(unwrappedTreeName)
         } else{
@@ -220,6 +219,7 @@ extension CameraViewController{
             blurEffectView.effect = effect
             topButtonArea.isUserInteractionEnabled = false
             cameraScreen.isUserInteractionEnabled = false
+            
         }else {
             self.blurEffectView.effect = nil
             topButtonArea.isUserInteractionEnabled = true
