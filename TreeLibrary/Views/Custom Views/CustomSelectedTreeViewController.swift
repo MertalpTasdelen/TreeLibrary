@@ -18,8 +18,6 @@ class CustomSelectedTreeViewController: UIView {
     @IBOutlet weak var swipeButton: UIButton!
     @IBOutlet var rootView: UIView!
     @IBOutlet weak var treeTurkishName: UILabel!
-    @IBOutlet weak var seedType: UILabel!
-    @IBOutlet weak var leafType: UILabel!
     @IBOutlet weak var treeImage: UIImageView!
     @IBOutlet weak var bothanicalProp: UITextView!
     

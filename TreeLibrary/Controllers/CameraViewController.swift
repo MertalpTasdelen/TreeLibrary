@@ -16,11 +16,13 @@ class CameraViewController: UIViewController {
     
     var searchedTreeVC: SelectedTreeViewController!
     var treeList = [TreeModel]()
+    var searchedTree: TreeModel!
     let cameraController = CameraConfigurationController()
     var searchedTreeLatinName = ""
     var topPadding: CGFloat = 0.0
     var effect: UIVisualEffect!
     var hostUrl = ""
+    var confidenceEdgeValue: Float = 0.99
 //    var blurEffectView = UIVisualEffectView()
 
     @IBOutlet weak var topButtonArea: UIView!
@@ -93,7 +95,6 @@ extension CameraViewController {
             //                PHAssetChangeRequest.creationRequestForAsset(from: image)
             //            }
             }
-    
 
     }
     
@@ -104,14 +105,32 @@ extension CameraViewController {
             fatalError("Loading CoreML model failed.")
         }
         
+        //Completion handler !!
         let request = VNCoreMLRequest(model: model) { (request, error) in
             guard let results = request.results as? [VNClassificationObservation] else {
                 fatalError("Model Failed to process Image")
             }
+
+            if results.first?.confidence ?? 0.999  > self.confidenceEdgeValue {
+                self.searchedTreeLatinName = results.first?.identifier ?? "Lorem Implus"
+                self.searchedTree = self.treeList.first{ $0.latin_name == self.searchedTreeLatinName}
+                
+                self.prepareCustomSelectedTreeViewController(capturedTree: self.searchedTree!)
+                self.downloadCapturedTreeImage(selectedTree: self.searchedTree?.latin_name ?? "Lorem Implus")
+                self.slide()
+                
+                print("I am in")
+                
+            }else {
+                self.searchedTreeLatinName = "Lorem Implus"
+                self.searchedTree = self.treeList.first{ $0.latin_name == self.searchedTreeLatinName}
+
+                self.prepareCustomSelectedTreeViewController(capturedTree: self.searchedTree!)
+                self.downloadCapturedTreeImage(selectedTree: self.searchedTree?.latin_name ?? "Lorem Implus")
+                self.slide()
+                print("Cant match")
+            }
             
-            self.searchedTreeLatinName = results.first?.identifier ?? "Lorem Implus"
-            
-//            print(results.first?.confidence ?? "Olmadi be")
         }
         
         let handler = VNImageRequestHandler(ciImage: image)
@@ -122,16 +141,6 @@ extension CameraViewController {
         
         } catch {
             print(error)
-        }
-        
-        let searchedTree = self.treeList.first{ $0.latin_name == searchedTreeLatinName}
-        prepareCustomSelectedTreeViewController(capturedTree: searchedTree!)
-        downloadCapturedTreeImage(selectedTree: searchedTree?.latin_name ?? "Lorem Implus")
-        slide()
-        if let unwrappedTreeName = searchedTree?.turkish_name {
-            print(unwrappedTreeName)
-        } else{
-            print("Eroro while printing treeName")
         }
         
     }
@@ -244,8 +253,9 @@ extension CameraViewController{
             
             UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
                 if  velocity.y >= 0 {
-                    self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.partialView, width: self.searchedTreeView.frame.width, height:  self.searchedTreeView.frame.height) //
+                    self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.partialView, width: self.searchedTreeView.frame.width, height:  self.searchedTreeView.frame.height)
                     self.performBlurEffect()
+                    
                 } else {
                     //ekranin yukari kalkmasi
                     self.searchedTreeView.frame = CGRect(x: 0, y: self.searchedTreeView.fullView, width: self.searchedTreeView.frame.width, height: self.searchedTreeView.frame.height)
@@ -283,19 +293,19 @@ extension CameraViewController {
     
     func prepareCustomSelectedTreeViewController(capturedTree tree: TreeModel) {
         
-        if tree.seed_type == "1" {
-            searchedTreeView.seedType.text = "Açık Tohum"
-        } else {
-            searchedTreeView.seedType.text = "Kapalı Tohum"
-        }
-        
-        if tree.leaf_type == "1" {
-            searchedTreeView.leafType.text = "İğne Yaprak"
-        } else {
-             searchedTreeView.leafType.text = "Kapalı Yaprak"
-        }
-        
-        
+//        if tree.seed_type == "1" {
+//            searchedTreeView.seedType.text = "Açık Tohum"
+//        } else {
+//            searchedTreeView.seedType.text = "Kapalı Tohum"
+//        }
+//
+//        if tree.leaf_type == "1" {
+//            searchedTreeView.leafType.text = "İğne Yaprak"
+//        } else {
+//             searchedTreeView.leafType.text = "Kapalı Yaprak"
+//        }
+//
+//
         searchedTreeView.treeTurkishName.text = tree.turkish_name
         searchedTreeView.bothanicalProp.text = tree.botanical_prop
         
