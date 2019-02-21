@@ -14,7 +14,7 @@ import Photos
 
 class CameraViewController: UIViewController {
     
-    var searchedTreeVC: SelectedTreeViewController!
+//    var searchedTreeVC: SelectedTreeViewController!
     var treeList = [TreeModel]()
     var searchedTree: TreeModel!
     let cameraController = CameraConfigurationController()
@@ -22,8 +22,7 @@ class CameraViewController: UIViewController {
     var topPadding: CGFloat = 0.0
     var effect: UIVisualEffect!
     var hostUrl = ""
-    var confidenceEdgeValue: Float = 0.99
-//    var blurEffectView = UIVisualEffectView()
+    var confidenceEdgeValue: Float = 0.998
 
     @IBOutlet weak var topButtonArea: UIView!
     @IBOutlet weak var searchedTreeView: CustomSelectedTreeViewController!
@@ -117,7 +116,7 @@ extension CameraViewController {
                 
                 self.prepareCustomSelectedTreeViewController(capturedTree: self.searchedTree!)
                 self.downloadCapturedTreeImage(selectedTree: self.searchedTree?.latin_name ?? "Lorem Implus")
-                self.slide()
+                //self.slide()
                 
                 print("I am in")
                 
@@ -127,10 +126,13 @@ extension CameraViewController {
 
                 self.prepareCustomSelectedTreeViewController(capturedTree: self.searchedTree!)
                 self.downloadCapturedTreeImage(selectedTree: self.searchedTree?.latin_name ?? "Lorem Implus")
-                self.slide()
+                //self.slide()
                 print("Cant match")
             }
-            
+            DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5){
+                self.slide()
+
+            }
         }
         
         let handler = VNImageRequestHandler(ciImage: image)
@@ -161,9 +163,7 @@ extension CameraViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(searchedTreeView.partialView)
-        print(UIScreen.main.bounds.height)
-        print(searchedTreeView.frame.height)
+        print(searchedTreeView.heightAnchor)
         
         effect = blurEffectView.effect
         blurEffectView.effect = nil
@@ -208,9 +208,10 @@ extension CameraViewController{
     func slide(){
         UIView.animate(withDuration: 0.3, delay: 0, options: [.transitionCurlUp],
                        animations: {
-                        self.searchedTreeView.frame = CGRect(x: 0, y: self.topButtonArea.frame.height + self.topPadding ,width: self.view.frame.maxX, height: self.view.frame.maxY)
+                        self.searchedTreeView.frame = CGRect(x: 0, y: self.topButtonArea.frame.height + self.topPadding ,width: self.view.frame.maxX, height: UIScreen.main.bounds.height - (self.topButtonArea.frame.height + self.topPadding))
                         self.searchedTreeView.layoutIfNeeded()
-                        print(self.searchedTreeView.fullView)
+                        print("Top padding \(self.topPadding)")
+                        print("Olmasi gereken uzunluk 682 ama \(self.searchedTreeView.frame.height)")
                         self.performBlurEffect()
         }, completion: nil)
     }
@@ -293,21 +294,20 @@ extension CameraViewController {
     
     func prepareCustomSelectedTreeViewController(capturedTree tree: TreeModel) {
         
-//        if tree.seed_type == "1" {
-//            searchedTreeView.seedType.text = "Açık Tohum"
-//        } else {
-//            searchedTreeView.seedType.text = "Kapalı Tohum"
-//        }
-//
-//        if tree.leaf_type == "1" {
-//            searchedTreeView.leafType.text = "İğne Yaprak"
-//        } else {
-//             searchedTreeView.leafType.text = "Kapalı Yaprak"
-//        }
-//
-//
         searchedTreeView.treeTurkishName.text = tree.turkish_name
         searchedTreeView.bothanicalProp.text = tree.botanical_prop
+//        searchedTreeView.sizeToFit()
+//        searchedTreeView.layoutIfNeeded()
+    
+    }
+    
+    fileprivate func prepareAutoLayoutForCustomSelectedTreeView(){
+        searchedTreeView.bothanicalProp.translatesAutoresizingMaskIntoConstraints = false
+        
+        searchedTreeView.bothanicalProp.topAnchor.constraint(equalTo: searchedTreeView.stackView.bottomAnchor).isActive = true
+        searchedTreeView.bothanicalProp.leadingAnchor.constraint(equalTo: searchedTreeView.rootView.leadingAnchor).isActive = true
+        searchedTreeView.bothanicalProp.trailingAnchor.constraint(equalTo: searchedTreeView.rootView.trailingAnchor).isActive = true
+        searchedTreeView.bothanicalProp.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
     }
 

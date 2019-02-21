@@ -20,10 +20,11 @@ class CustomSelectedTreeViewController: UIView {
     @IBOutlet weak var treeTurkishName: UILabel!
     @IBOutlet weak var treeImage: UIImageView!
     @IBOutlet weak var bothanicalProp: UITextView!
+    @IBOutlet weak var stackView: UIStackView!
     
-    //bu deger ise yukari kalkan goruntunun boyutu
+    //bu deger ise yukari kalkan goruntunun boyutu icin y baslangic koordinati
     let fullView: CGFloat = UIApplication.shared.statusBarFrame.height + 76
-    //baslangicda alt konumda dururkenki view boyutu
+    //baslangicda alt konumda dururkenki view boyutu icin y baslangic koordinati
     var partialView: CGFloat{
         let returnVal = (UIScreen.main.bounds.height)-(60) //UIApplication.shared.keyWindow?.safeAreaInsets.top ??
             return returnVal
@@ -38,10 +39,12 @@ class CustomSelectedTreeViewController: UIView {
         }
         
         Bundle.main.loadNibNamed("CustomSelectedTree", owner: self, options: nil)
+        rootView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.height - (76 + topPadding))
         self.addSubview(self.rootView)
-        
+        self.layoutIfNeeded()
         rootView.layer.cornerRadius = 10
         rootView.layer.masksToBounds = true
+//        rootView.frame = CGRect(x: 0, y: 76 + topPadding, width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.height - (76 + topPadding))
     
     }
 
