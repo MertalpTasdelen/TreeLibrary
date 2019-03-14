@@ -17,6 +17,12 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
     var blurEffectView = UIVisualEffectView()
     var forest: NSArray = NSArray()
     var locations: NSArray = NSArray()
+    
+    //MARK: DummyLocation Variables
+    var locationArray = [LocationModel]()
+    var dumlocations: NSArray = NSArray()
+    
+    
     var treeLocation = [TreeAnnotation]()
     var filteredTrees = [TreeModel]()
     var arrayOfForest = [TreeModel]()
@@ -76,6 +82,11 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         treeAnnotation.delegate = self
         treeAnnotation.downloadLocations()
         
+        let dummyLocation = LocationModel()
+        dummyLocation.delegate = self
+        dummyLocation.downloadLocations()
+        
+        
         let number = Int.random(in: 0 ..< 5)
         let images:[UIImage] = [#imageLiteral(resourceName: "forest1"),#imageLiteral(resourceName: "forest2"),#imageLiteral(resourceName: "forest3"),#imageLiteral(resourceName: "forest4"),#imageLiteral(resourceName: "forest5")]
         backgroundImage.image = images[number]
@@ -98,6 +109,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         
     }
     
+    
     //MARK: Sending data to another VCs
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "bookViewSegue" {
@@ -109,7 +121,7 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         
         if segue.identifier == "mapViewSegue" {
             let destVC = segue.destination as! MapViewController
-            destVC.treeLocationArray = treeLocation
+            destVC.locationArray = locationArray
             
         }
         
@@ -138,7 +150,7 @@ extension MainPageViewController: TreeAnnotationProtocol {
     func locationsDownloaded(item: NSArray) {
         locations = item
         
-        for item in 0 ..< locations.count {
+        for item in 0 ..< locations.count / 2 {
             treeLocation.append(locations[item] as! TreeAnnotation)
         }
     }
@@ -153,6 +165,18 @@ extension MainPageViewController: TreeModelProtocol {
         }
     }
 }
+
+// MARK: Extension for dummyAnnotations
+extension MainPageViewController: DummyAnnotationProtocol {
+    func dummyLocationsDownloaded(item: NSArray) {
+        dumlocations = item
+        for item in 0 ..< dumlocations.count {
+            locationArray.append(dumlocations[item] as! LocationModel)
+        }
+    }
+}
+
+
 
 extension MainPageViewController: MFMailComposeViewControllerDelegate{
    

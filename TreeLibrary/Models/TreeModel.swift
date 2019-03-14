@@ -82,7 +82,7 @@ class TreeModel: NSObject, URLSessionDelegate{
                 }
             }
             
-            DispatchQueue.main.async {
+            DispatchQueue.global(qos:.userInitiated).async {
                 self.delegate.itemsDownloaded(items: forest)
             }
             

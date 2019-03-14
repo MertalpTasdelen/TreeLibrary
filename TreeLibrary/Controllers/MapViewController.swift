@@ -14,10 +14,10 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
-    var treeLocationArray = [TreeAnnotation]()
+    var locationArray = [LocationModel]()
     let locationManager = CLLocationManager()
-    let regionInMeters: Double = 150000
-
+    let regionInMeters: Double = 15000000
+    
     @IBAction func backToMainPage(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -39,23 +39,13 @@ class MapViewController: UIViewController {
         let orientation = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(orientation, forKey: "orientation")
         setNeedsStatusBarAppearanceUpdate()
-        //addSelectedAnnotationView() Burasi uygulamayi patlatiyor su an
+        
         checkLocationServices()
-    }
-    
-    func addSelectedAnnotationView(scrollable: Bool? = true) {
-        // 1- Init bottomSheetVC
-        let selectedAnnotationVC = scrollable! ? SelectedAnnotationViewController() : SelectedAnnotationViewController()
+        print("number of locations \(locationArray.count)")
         
-        // 2- Add bottomSHeetVC as a child view
-        self.addChild(selectedAnnotationVC)
-        self.view.addSubview(selectedAnnotationVC.view)
-        selectedAnnotationVC.didMove(toParent: self)
-        
-        // 3- Adjust bottomSheet frame and inital position
-        let height = view.frame.height
-        let width = view.frame.width
-        selectedAnnotationVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height:height)
+//        for item in 0 ..< 50 {
+//            print("Location \(item + 1): \(locationArray[item].coordinate)")
+//        }
     }
     
     func setupLocationManager() {
@@ -104,11 +94,11 @@ class MapViewController: UIViewController {
     
     
     private func addAnnotations(){
-
-        for location in treeLocationArray {
-            print(location.coordinate)
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.mapView.addAnnotations(self.locationArray)
         }
-        mapView.addAnnotations(treeLocationArray)
+        
     }
     
     //to set the user location in center of the map
@@ -126,7 +116,9 @@ class MapViewController: UIViewController {
 extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        addAnnotations()
+        DispatchQueue.global(qos:.userInitiated).async {
+            self.addAnnotations()
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -136,12 +128,12 @@ extension MapViewController: CLLocationManagerDelegate {
 }
 
 extension MapViewController: MKMapViewDelegate {
-
-    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // tree tıklandığında gerçekleşen metod
-        print("Yeni sayfa açılacak")
+        print("Yeni sayfa açılacak location")
     }
+    
+
 }
 
 extension String {

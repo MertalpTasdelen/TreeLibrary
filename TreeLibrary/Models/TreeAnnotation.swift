@@ -74,7 +74,7 @@ class TreeAnnotation: NSObject, URLSessionDelegate, MKAnnotation {
                 }
             }
             
-            DispatchQueue.main.async {
+            DispatchQueue.global(qos:.userInitiated).async {
                 self.delegate.locationsDownloaded(item: locations)
             }
             

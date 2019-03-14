@@ -22,6 +22,7 @@
 		BB7DAB1221F1408B00445AAD /* TreeImageClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BB7DAB1121F1408A00445AAD /* TreeImageClassifier.mlmodel */; };
 		BB948EDA2143BD15007E9568 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB948ED92143BD15007E9568 /* MapViewController.swift */; };
 		BB948EDD2143BD7E007E9568 /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB948EDC2143BD7E007E9568 /* BookViewController.swift */; };
+		BBC28F002236FF0C00CAED4A /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC28EFF2236FF0C00CAED4A /* LocationModel.swift */; };
 		BBCA14AD218105E200594ABE /* TreeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCA14AC218105E200594ABE /* TreeAnnotation.swift */; };
 		BBE060B02119C25300A52347 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE060AF2119C25300A52347 /* CameraViewController.swift */; };
 		BBF6062E2142CC9C00C940F7 /* TreeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF6062D2142CC9C00C940F7 /* TreeModel.swift */; };
@@ -45,6 +46,7 @@
 		BB7DAB1121F1408A00445AAD /* TreeImageClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TreeImageClassifier.mlmodel; sourceTree = "<group>"; };
 		BB948ED92143BD15007E9568 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		BB948EDC2143BD7E007E9568 /* BookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
+		BBC28EFF2236FF0C00CAED4A /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		BBCA14AC218105E200594ABE /* TreeAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeAnnotation.swift; sourceTree = "<group>"; };
 		BBE060AF2119C25300A52347 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		BBF6062D2142CC9C00C940F7 /* TreeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeModel.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				BBF6062D2142CC9C00C940F7 /* TreeModel.swift */,
 				BBCA14AC218105E200594ABE /* TreeAnnotation.swift */,
+				BBC28EFF2236FF0C00CAED4A /* LocationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				BB491B0921C56EDA00D0F912 /* CameraConfigurationController.swift in Sources */,
 				BB2E436B2216B80B0030094F /* CustomSelectedTreeViewController.swift in Sources */,
 				BBE060B02119C25300A52347 /* CameraViewController.swift in Sources */,
+				BBC28F002236FF0C00CAED4A /* LocationModel.swift in Sources */,
 				BB5B6FF92166B1D600C3B1AD /* SelectedTreeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
