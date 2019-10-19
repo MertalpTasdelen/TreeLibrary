@@ -22,10 +22,11 @@ class SelectedTreeViewController: UIViewController {
     @IBOutlet weak var spreadingAreaHeader: UILabel!
     @IBOutlet weak var textViewSpreadingArea: UITextView!
     
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var shareBarButton: UIBarButtonItem! // wpden gönderme mail atma vs olacak airdrop da koy!!!
+    @IBOutlet weak var shareBarButton: UIBarButtonItem! 
     @IBOutlet weak var navigationTitleItem: UINavigationItem!
     var selectedTree: TreeModel = TreeModel()
     
@@ -52,8 +53,7 @@ class SelectedTreeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
-        
-        
+        doneButton.title = "Tamam"
         let memoryCapacity = 500 * 1024 * 1024
         let diskCapacity = 500 * 1024 * 1024
         let urlCache = URLCache(memoryCapacity: memoryCapacity, diskCapacity: diskCapacity, diskPath: "myTreeUrl")

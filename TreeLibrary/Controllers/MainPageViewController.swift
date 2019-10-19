@@ -11,17 +11,13 @@ import MessageUI
 
 class MainPageViewController: UIViewController, UISearchBarDelegate {
 
-    
-    
     private var myTableView: UITableView!
-    var blurEffectView = UIVisualEffectView()
     var forest: NSArray = NSArray()
     var locations: NSArray = NSArray()
     
     //MARK: DummyLocation Variables
     var locationArray = [LocationModel]()
     var dumlocations: NSArray = NSArray()
-    
     
     var treeLocation = [TreeAnnotation]()
     var filteredTrees = [TreeModel]()
@@ -30,8 +26,6 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
     var searchController = UISearchController(searchResultsController: nil)
     //This property used for peparing the bacground randomly
     @IBOutlet weak var backgroundImage: UIImageView!
-    
-    
     
     @IBOutlet weak var sliderSearchArea: UIButton!
     @IBOutlet weak var sliderSearchLabel: UIButton!
@@ -63,8 +57,6 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(UIScreen.main.bounds.height)
-        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
@@ -86,23 +78,27 @@ class MainPageViewController: UIViewController, UISearchBarDelegate {
         dummyLocation.delegate = self
         dummyLocation.downloadLocations()
         
-        
         let number = Int.random(in: 0 ..< 5)
         let images:[UIImage] = [#imageLiteral(resourceName: "forest1"),#imageLiteral(resourceName: "forest2"),#imageLiteral(resourceName: "forest3"),#imageLiteral(resourceName: "forest4"),#imageLiteral(resourceName: "forest5")]
         backgroundImage.image = images[number]
         backgroundImage.alpha = CGFloat(0.6)
-        
         
         //MARK: SwipeDown gesture regognizer
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(openSearchBar))
         swipeDown.direction = .down
         sliderSearchArea.addGestureRecognizer(swipeDown)
         
+        let backgrounBlurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: backgrounBlurEffect)
+        blurEffectView.alpha = 0.65
+        blurEffectView.frame = self.view.frame
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.insertSubview(blurEffectView, at: 1)
+        
     }
     
 
     @objc func openSearchBar(){
-        
         // Present the view controller
         present(searchController,animated: true, completion: nil)
         self.view.addSubview(myTableView)

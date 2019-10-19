@@ -52,16 +52,18 @@ class LocationModel: NSObject, URLSessionDelegate, MKAnnotation {
             let locations = NSMutableArray()
             
             for jsonElement in jsonResult {
+//                print(jsonElement)
                 if
                     let tempLongitude = jsonElement["geo_latitude"] as? Double,
-                    let tempLatitude = jsonElement["geo_longitute"] as? Double,
-                    let tempId = jsonElement["id"] as? Double {
+                    let tempLatitude = jsonElement["geo_longitude"] as? Double,
+                    let tempId = jsonElement["geo_id"] as? Double {
                     
                     let tempLocation = LocationModel()
                     
                     tempLocation.longitute = tempLongitude
                     tempLocation.latitude = tempLatitude
                     tempLocation.Id = tempId
+//                    print(tempLocation.latitude)
                     tempLocation.coordinate = CLLocationCoordinate2D(latitude: tempLocation.latitude, longitude: tempLocation.longitute)
                     
                     

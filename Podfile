@@ -6,7 +6,7 @@ target 'TreeLibrary' do
   use_frameworks!
 
   # Pods for TreeLibrary
-  pod 'FloatingPanel'
+  #pod 'FloatingPanel'
   #pod 'Alamofire', '~> 5.0.0.beta.1'
 
 end

@@ -89,7 +89,8 @@ extension CameraViewController {
             }
             self.detect(image: ciImage)
             self.cameraScreen.isHidden = false
-                
+            
+            //Process of saving taken photo
             //            try? PHPhotoLibrary.shared().performChangesAndWait {
             //                PHAssetChangeRequest.creationRequestForAsset(from: image)
             //            }
@@ -117,7 +118,6 @@ extension CameraViewController {
                 self.prepareCustomSelectedTreeViewController(capturedTree: self.searchedTree!)
                 self.downloadCapturedTreeImage(selectedTree: self.searchedTree?.latin_name ?? "Lorem Implus")
                 //self.slide()
-                
                 print("I am in")
                 
             }else {
@@ -205,7 +205,7 @@ extension CameraViewController{
         captureButton.layer.add(animation, forKey: nil)
     }
     
-    func slide(){
+     func slide(){
         UIView.animate(withDuration: 0.3, delay: 0, options: [.transitionCurlUp],
                        animations: {
                         self.searchedTreeView.frame = CGRect(x: 0, y: self.topButtonArea.frame.height + self.topPadding ,width: self.view.frame.maxX, height: UIScreen.main.bounds.height - (self.topButtonArea.frame.height + self.topPadding))
